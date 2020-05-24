@@ -5,3 +5,5 @@ authentication/__pycache__/*
 authentication/migrations/0001_initial.py
 authentication/__pycache__/views.cpython-38.pyc
 authentication/__pycache__/views.cpython-38.pyc
+authentication/__pycache__/views.cpython-38.pyc
+steam_openid/__pycache__/settings.cpython-38.pyc
