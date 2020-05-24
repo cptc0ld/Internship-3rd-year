@@ -1,0 +1,7 @@
+
+db.sqlite3
+authentication/__pycache__/*
+*.pyc
+authentication/migrations/0001_initial.py
+authentication/__pycache__/views.cpython-38.pyc
+authentication/__pycache__/views.cpython-38.pyc

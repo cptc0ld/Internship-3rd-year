@@ -1,4 +1,4 @@
-from django.contrib.auth.views import LogoutView as logout
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 
 from django.views import View
