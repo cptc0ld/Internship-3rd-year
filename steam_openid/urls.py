@@ -16,8 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('social_django.urls', namespace='social')),
     url(r'^', include('authentication.urls', namespace='auth')),
+    url(r'^', include('inventory.urls', namespace='invo')),
 ]

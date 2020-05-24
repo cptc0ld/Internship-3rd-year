@@ -9,3 +9,4 @@ authentication/__pycache__/views.cpython-38.pyc
 steam_openid/__pycache__/settings.cpython-38.pyc
 authentication/__pycache__/views.cpython-38.pyc
 db.sqlite3
+db.sqlite3

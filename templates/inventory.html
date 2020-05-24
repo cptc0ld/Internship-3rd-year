@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Steam OpenId Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <div id="banner">
+        </div>
+            <div class="container-fluid">
+                <nav id="navigation" class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">P2Ptrade</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                            <li class=''><a href="{% url "auth:index"  %}">Home</a></li>
+                            {% if user.is_authenticated %}
+                                <li class=''><a href=" {% url "invo:invo" user.steamid  %}"><button>Inventory</button></a></a></li>
+                                <li class=''><a href=''><button>Trade Link</button></a></a></li>
+                                <li class=''><a href=''><button>Send Trade </button></a></a></li>
+                            
+                                <li class=''> <a href="{% url "auth:logout" %}">Logout {{ user.personaname }}</a>  </li>
+                                <img src = "{{user.avatar}}">
+
+                            {% else %}
+                            <li class=''>
+                            <a href="{% url "social:begin" "steam" %}">Sign in with Steam</a>                
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                
+
+                <div id="sidebar">
+                </div>
+
+                <footer>
+                </footer>
+            </div>
+    
+    <div class="cont items">
+                {% for d in data %} 
+                    <div class='cont flex-item'>   
+                        <img src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
+                        <br>
+                        <span> {{d.name}} </span>
+                    </div>
+                    {% if forloop.counter|divisibleby:"5" %}
+                    </div>
+                    <div class="cont items">
+                    {% endif %}
+                {% endfor %}
+
+    
+    
+ 
+    
+    </div>
+    </div>
+</body>
+

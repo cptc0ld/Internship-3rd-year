@@ -1,0 +1,19 @@
+#wrapper{
+  width: fit-content  ;
+}
+.cont{
+  color: #fff;
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
+  padding: 10px;
+
+}
+.items {
+  background-color:rgb(119, 128, 150);
+  display: flex;
+  width: calc(100% / 2)
+}
+
+.flex-item {
+    background-color:rgb(88, 88, 88);
+    width : 200px;
+  }

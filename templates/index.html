@@ -29,11 +29,11 @@
                 </div>
                 <ul class="nav navbar-nav">
                         <li class=''><a href="">Home</a></li>
-
-                        <li class=''><a href=''><button>Inventory</button></a></a></li>
+                    {% if user.is_authenticated %}
+                        <li class=''><a href=" {% url "invo:invo" user.steamid  %}"><button>Inventory</button></a></a></li>
                         <li class=''><a href=''><button>Trade Link</button></a></a></li>
                         <li class=''><a href=''><button>Send Trade </button></a></a></li>
-                    {% if user.is_authenticated %}
+                    
                         <li class=''> <a href="{% url "auth:logout" %}">Logout {{ user.personaname }}</a>  </li>
                         <img src = "{{user.avatar}}">
                         {% comment %} <img src="{% url user.profileurl %}">Logout</a> {% endcomment %}
