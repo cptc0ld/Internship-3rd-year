@@ -6,6 +6,8 @@ from django.views import View
 
 class IndexView(View):
     def get(self, request):
+        print(str(request))
+
         return render(request, 'index.html')
 
 
