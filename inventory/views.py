@@ -10,7 +10,17 @@ def invo(request, steamid = None):
 
         response = requests.get(URL)
         response = response.json()
-        context = list()
+        context1 = list()
+        context2 = list()
+        for x in response['assets']:
+            assets = dict()
+            assets["appid"] = x["appid"]
+            assets["contextid"] = x["contextid"]
+            assets["assetid"] = x["assetid"]
+            assets["classid"] = x["classid"]
+            assets["instanceid"] = x["instanceid"]
+            assets["amount"] = x["amount"]
+            context2.append(assets)
         for x in response['descriptions']:
             # print(x)
             description = dict()
@@ -21,9 +31,17 @@ def invo(request, steamid = None):
             description['name'] = x['name']
             description['market_name'] = x['market_name']
             description['tradable'] = x['tradable']
-            context.append(description)
+            context1.append(description)
+
+        for x in context2:
+            for y in context1:
+                if(x["classid"] == y["classid"]):
+                    x["icon_url"] = y["icon_url"]
+                    x["market_name"] = y["market_name"]
+                    x["tradable"] = y["tradable"]
+
         content = {
-            'data' : context
+            'data' : context2
         }
         # print(len(context))
         return render(request, 'inventory.html', content)

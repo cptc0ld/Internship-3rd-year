@@ -1,0 +1,64 @@
+{% comment %} {
+    'user.steamid'
+    'user.personaname'
+    'user.profileurl'
+    'user.avatar'
+} {% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Steam OpenId Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <div class="container-fluid">
+            <nav id="navigation" class="navbar navbar-default">
+                
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="{% url "auth:index"%}">P2Ptrade</a>
+                    </div>
+                    <ul class="nav">
+                        {% if user.is_authenticated %}
+                            <img class="pull-right" src = "{{user.avatar}}">    
+                            <li class='pull-right'> <a href="{% url "auth:logout" %}">Logout {{ user.personaname }}</a>  </li>
+                            <li class='pull-right'><a href=''><button>Send Trade </button></a></a></li>
+                            <li class='pull-right'><a href=''><button>Trade Link</button></a></a></li>
+                            <li class='pull-right'><a href=" {% url "invo:invo" user.steamid  %}"><button>Inventory</button></a></a></li>
+                        
+                            
+                            
+                            {% comment %} <img src="{% url user.profileurl %}">Logout</a> {% endcomment %}
+                        {% else %}
+                            <li class=''>
+                            <a href="{% url "social:begin" "steam" %}">Sign in with Steam</a>                
+                            </li>
+                        {% endif %}
+                    </ul>
+            </nav>
+                    <div id="content_area">
+                    {% block content %}{% endblock content %}
+                    </div>
+
+                    <div>
+                    {% block inventory %}{% endblock inventory %}
+                    </div>
+
+                    <div id="sidebar">
+                    {% block sidebar %}{% endblock sidebar %}
+                    </div>
+            
+        </div>                
+
+                    <footer>
+                    </footer>
+    </div>
+</body>
