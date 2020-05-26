@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^', include('social_django.urls', namespace='social')),
     url(r'^', include('authentication.urls', namespace='auth')),
     url(r'^', include('inventory.urls', namespace='invo')),
+    url(r'^', include('market.urls', namespace='market')),
 ]

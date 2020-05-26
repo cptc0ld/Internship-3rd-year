@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+
+{% block market %}
+{% for c in cat %} 
+    {{c.market_name}}
+{% endfor %}
+{% endblock market %}
+
