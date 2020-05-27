@@ -2,8 +2,26 @@
 
 
 {% block market %}
-{% for c in cat %} 
-    {{c.market_name}}
-{% endfor %}
+<div id="content" class="container"> 
+        <div class="row">
+                {% for item in items %} 
+
+					<section class="3u item">
+                        <a href="#{{d.appid}}_{{d.contextid}}_{{ d.assetid}}">
+                                <img src = "https://steamcommunity-a.akamaihd.net/economy/image/{{item.icon_url}}" width = "100px" height = "100px"> 
+                                <h6> {{item.market_name}} </h6>
+                        </a>
+                        <input type="radio" name = "data" value="{{d}}"/>
+                    </section>		
+                    {% if forloop.counter|divisibleby:"4" %}
+                        </div>
+                        <div class="row">
+                    {% endif %}
+                    {% endfor %}
+					</section>				
+				</div>		
+</div>
+                        
+
 {% endblock market %}
 

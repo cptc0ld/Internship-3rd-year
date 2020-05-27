@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% comment %} 
-
 items
 {
     d.appid
@@ -14,19 +13,67 @@ items
     d.tradable
 } 
 {% endcomment %}
-
 {% block inventory %}
-    <div class="cont items">
-                {% for d in data %} 
-                    <div class='cont flex-item'>   
-                        <a href="#{{d.appid}}_{{d.contextid}}_{{ d.assetid}}"><img src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> </a>
-                        <br>
-                        <span> {{d.name}} </span>
-                    </div>
-                    {% if forloop.counter|divisibleby:"5" %}
-                    </div>
-                    <div class="cont items">
+<div id="content" class="container"> 
+    <form action="{% url "market:sellitem" %}" method="post">
+    <input type="submit" class="submit_btn btn label-success" value="Sell" />
+        {% csrf_token %}    
+        {{ form }}
+        <div class="row">
+         {% for d in data %} 
+					<section class="3u item">
+                        <a href="#{{d.appid}}_{{d.contextid}}_{{ d.assetid}}">
+                                <img class = "itemimg" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
+                                <h6> {{d.market_name}} </h6>
+                        </a>
+                        <input type="radio" name = "data" value="{{d}}"/>
+                    </section>		
+                    {% if forloop.counter|divisibleby:"4" %}
+                        </div>
+                        <div class="row">
                     {% endif %}
-                {% endfor %}
-    </div>
+                    {% endfor %}
+					</section>				
+				</div>		
+    </form>	
+</div>
+
+   
+<script type='text/javascript'>
+var flag  = 0;
+$(".item").click(function() {
+    $(this).children().last().prop("checked", true);
+});
+
+$('.item').click(function() {
+    if(flag == 1){
+        $('.item').removeClass('red')
+        $(this).addClass('red');
+        flag = 0;
+    }
+    else{
+        $(this).addClass('red');
+    }
+    flag = 1;
+});
+
+</script>
+<style>
+
+.row{
+    {% comment %} background-color : black {% endcomment %}
+}
+input{
+    display: all
+}
+.red {
+  {% comment %} background: red {% endcomment %}
+  opacity : 0.2
+}
+.blank {
+    background : inherit
+}
+</style>
+
 {% endblock inventory %}
+

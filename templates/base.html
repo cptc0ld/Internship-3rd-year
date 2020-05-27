@@ -5,35 +5,42 @@
     'user.avatar'
 } {% endcomment %}
 {% load static %}
+
 <!DOCTYPE html>
 <html>
+	<head>
+        <title>Steam OpenId Test</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,700,500,900' rel='stylesheet' type='text/css'>
+		<script src="{% static 'js/skel.min.js' %}"></script>
+		<script src="{% static 'js/skel-panels.min.js' %}"></script>
+		<script src="{% static 'js/init.js' %}"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{% static 'css/skel-noscript.css'%}" />
+        <link rel="stylesheet" href="{% static 'css/style.css'%}">
+        <link rel="stylesheet" href="{% static 'css/style-desktop.css'%}"/>
+	</head>
+	<body class="homepage">
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Steam OpenId Test</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/style.css'%}">
-</head>
-
-<body>
-
-    <div id="wrapper">
-        <div class="container-fluid">
-            <nav id="navigation" class="navbar navbar-default">
-                
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="{% url "auth:index"%}">P2Ptrade</a>
-                    </div>
-                    <ul class="nav">
+	<!-- Header -->
+		<div id="header">
+			<div id="nav-wrapper"> 
+				<!-- Nav -->
+				<nav id="nav">
+					<ul>
+                        <li><a class="active" href="{% url "auth:index"%}">HOME</a></li>
                         {% if user.is_authenticated %}
-                            <img class="pull-right" src = "{{user.avatar}}">    
-                            <li class='pull-right'> <a href="{% url "auth:logout" %}">Logout {{ user.personaname }}</a>  </li>
-                            <li class='pull-right'><a href=''><button>Send Trade </button></a></a></li>
-                            <li class='pull-right'><a href=''><button>Trade Link</button></a></a></li>
-                            <li class='pull-right'><a href=" {% url "invo:invo" user.steamid  %}"><button>Inventory</button></a></a></li>
-                        
+                           
+                            <li class=''><a href="{% url "market:market" %}">Market</a></a></li>
+                            <li class=''><a href=" {% url "invo:invo" user.steamid  %}">Inventory</a></a></li>
+                            <li class=''><a href=''>Trade Link</a></a></li>
+                            <li class=''> <a href="{% url "auth:logout" %}">Logout {{ user.personaname }}</a>  </li>    
+                            <li> <a> <img class="" src = "{{user.avatar}}">   </a> </li>
                             
                             
                             {% comment %} <img src="{% url user.profileurl %}">Logout</a> {% endcomment %}
@@ -42,23 +49,96 @@
                             <a href="{% url "social:begin" "steam" %}">Sign in with Steam</a>                
                             </li>
                         {% endif %}
-                    </ul>
-            </nav>
-                    <div id="content_area">
+					</ul>
+				</nav>
+                
+			</div>
+            <div id="content_area">
                     {% block content %}{% endblock content %}
                     </div>
-
-                    <div>
-                    {% block inventory %}{% endblock inventory %}
-                    </div>
-                    {% block market %}{% endblock market %}
                     <div id="sidebar">
                     {% block sidebar %}{% endblock sidebar %}
                     </div>
-            
-        </div>                
+			<div class="container"> 
+				
+				<!-- Logo -->
+				<div id="logo">
+					<h5><a href="#">EasyTrade</a></h5>
+					<span class="tag">By cJ</span>
+				</div>
+			</div>
+		</div>
 
-                    <footer>
-                    </footer>
-    </div>
-</body>
+	<!-- Featured -->
+		{% comment %} <div id="featured">
+			<div class="container">
+				<header>
+					<h2>Welcome to Linear</h2>
+				</header>
+				<p>This is <strong>Linear</strong>, a responsive HTML5 site template freebie by <a href="http://templated.co">TEMPLATED</a>. Released for free under the <a href="http://templated.co/license">Creative Commons Attribution</a> license, so use it for whatever (personal or commercial) &ndash; just give us credit! Check out more of our stuff at <a href="http://templated.co">our site</a> or follow us on <a href="http://twitter.com/templatedco">Twitter</a>.</p>
+				<hr />
+				<div class="row">
+					<section class="4u">
+						<span class="pennant"><span class="fa fa-briefcase"></span></span>
+						<h3>Maecenas luctus lectus</h3>
+						<p>Curabitur sit amet nulla. Nam in massa. Sed vel tellus. Curabitur sem urna, consequat vel, suscipit in, mattis placerat, nulla. Sed ac leo.</p>
+						<a href="#" class="button button-style1">Read More</a>
+					</section>
+					<section class="4u">
+						<span class="pennant"><span class="fa fa-lock"></span></span>
+						<h3>Maecenas luctus lectus</h3>
+						<p>Donec ornare neque ac sem. Mauris aliquet. Aliquam sem leo, vulputate sed, convallis at, ultricies quis, justo. Donec magna.</p>
+						<a href="#" class="button button-style1">Read More</a>
+					</section>
+					<section class="4u">
+						<span class="pennant"><span class="fa fa-globe"></span></span>
+						<h3>Maecenas luctus lectus</h3>
+						<p>Curabitur sit amet nulla. Nam in massa. Sed vel tellus. Curabitur sem urna, consequat vel, suscipit in, mattis placerat, nulla. Sed ac leo.</p>
+						<a href="#" class="button button-style1">Read More</a>
+					</section>
+
+				</div>
+			</div>
+		</div> {% endcomment %}
+
+	<!-- Main -->
+		<div id="main">
+            {% block inventory %}{% endblock inventory %}
+            {% block market %}{% endblock market %}
+			
+		</div>
+
+	<!-- Tweet -->
+		<div id="tweet">
+			<div class="container">
+				
+			</div>
+		</div>
+
+	<!-- Footer -->
+		<div id="footer">
+			<div class="container">
+				{% comment %} <section>
+					<header>
+						<h2>Get in touch</h2>
+						<span class="byline">Integer sit amet pede vel arcu aliquet pretium</span>
+					</header>
+					<ul class="contact">
+						<li><a href="#" class="fa fa-twitter"><span>Twitter</span></a></li>
+						<li class="active"><a href="#" class="fa fa-facebook"><span>Facebook</span></a></li>
+						<li><a href="#" class="fa fa-dribbble"><span>Pinterest</span></a></li>
+						<li><a href="#" class="fa fa-tumblr"><span>Google+</span></a></li>
+					</ul>
+				</section> {% endcomment %}
+			</div>
+		</div>
+
+	<!-- Copyright -->
+		<div id="copyright">
+			<div class="container">
+				Design: <a href="">Cptcold</a>
+			</div>
+		</div>
+
+	</body>
+</html>
