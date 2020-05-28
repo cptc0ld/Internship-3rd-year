@@ -97,13 +97,13 @@
 		</div> {% endcomment %}
 
 	<!-- Main -->
-		<div id="main">
+		{% comment %} <div id="main"> {% endcomment %}
             {% block inventory %}{% endblock inventory %}
             {% block market %}{% endblock market %}
 			{% block savetl %}{% endblock savetl %}
 			{% block tradelink %}{% endblock tradelink %}
 			{% block payment %}{% endblock payment %}
-		</div>
+		{% comment %} </div> {% endcomment %}
 
 	<!-- Tweet -->
 		<div id="tweet">
