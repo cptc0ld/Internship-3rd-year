@@ -4,7 +4,7 @@
     <form action="{% url 'auth:savetl' user.steamid %}" method="get">
         {% csrf_token %}    
         {{ form }}
-        <input type = "text" class="form-control" name = "tradeurl">
+        <input type = "text" class="form-control" name = "tradeurl" placeholder = "{{url}}">
         <br>
         <input type="submit" class="submit_btn btn label-success" value="Set" />
     </form>

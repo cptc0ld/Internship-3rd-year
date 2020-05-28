@@ -6,8 +6,6 @@ from django.http import HttpResponse
 
 class IndexView(View):
     def get(self, request):
-        print(str(request))
-
         return render(request, 'index.html')
 
 
@@ -17,12 +15,15 @@ class LogoutView(View):
         return redirect('auth:index')
 
 def tradelink(request, steamid = None):
-    return render(request, 'tradelink.html')
+    if(steamid):
+        user = models.SteamUser.objects.get(steamid = steamid)
+
+        return render(request, 'tradelink.html', {'url' : user.tradeurl})
+    else:
+        return redirect('auth:index')
 
 def savetl(request, steamid):
     if(request.method == 'GET'):
-            print("on")
-            
             user = models.SteamUser.objects.get(steamid = steamid)
             user.tradeurl = request.GET.get("tradeurl")
             user.save()

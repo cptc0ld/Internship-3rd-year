@@ -59,10 +59,6 @@ class SteamUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     objects = SteamUserManager()
-
-    def set_url(self, tradeurl):
-        self.tradeurl = tradeurl
-        print("tradeurl")
         
     def get_short_name(self):
         return self.personaname
