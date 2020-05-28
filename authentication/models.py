@@ -21,6 +21,9 @@ class SteamUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
+        
+    
+
 
     def create_user(self, steamid, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
@@ -48,7 +51,7 @@ class SteamUser(AbstractBaseUser, PermissionsMixin):
     avatar = models.CharField(max_length=255)
     avatarmedium = models.CharField(max_length=255)
     avatarfull = models.CharField(max_length=255)
-
+    tradeurl = models.CharField(max_length=255)
     # Add the other fields that can be retrieved from the Web-API if required
 
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
@@ -57,6 +60,10 @@ class SteamUser(AbstractBaseUser, PermissionsMixin):
 
     objects = SteamUserManager()
 
+    def set_url(self, tradeurl):
+        self.tradeurl = tradeurl
+        print("tradeurl")
+        
     def get_short_name(self):
         return self.personaname
 

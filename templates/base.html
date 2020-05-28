@@ -26,7 +26,6 @@
         <link rel="stylesheet" href="{% static 'css/style-desktop.css'%}"/>
 	</head>
 	<body class="homepage">
-
 	<!-- Header -->
 		<div id="header">
 			<div id="nav-wrapper"> 
@@ -38,7 +37,7 @@
                            
                             <li class=''><a href="{% url "market:market" %}">Market</a></a></li>
                             <li class=''><a href=" {% url "invo:invo" user.steamid  %}">Inventory</a></a></li>
-                            <li class=''><a href=''>Trade Link</a></a></li>
+                            <li class=''><a href="{% url "auth:tl" user.steamid  %}">Trade Link</a></a></li>
                             <li class=''> <a href="{% url "auth:logout" %}">Logout {{ user.personaname }}</a>  </li>    
                             <li> <a> <img class="" src = "{{user.avatar}}">   </a> </li>
                             
@@ -60,12 +59,8 @@
                     {% block sidebar %}{% endblock sidebar %}
                     </div>
 			<div class="container"> 
-				
-				<!-- Logo -->
-				<div id="logo">
-					<h5><a href="#">EasyTrade</a></h5>
-					<span class="tag">By cJ</span>
-				</div>
+			<!-- Logo -->
+				{% block logo %}{% endblock logo %}
 			</div>
 		</div>
 
@@ -105,31 +100,19 @@
 		<div id="main">
             {% block inventory %}{% endblock inventory %}
             {% block market %}{% endblock market %}
-			
+			{% block savetl %}{% endblock savetl %}
+			{% block tradelink %}{% endblock tradelink %}
 		</div>
 
 	<!-- Tweet -->
 		<div id="tweet">
 			<div class="container">
-				
 			</div>
 		</div>
 
 	<!-- Footer -->
 		<div id="footer">
 			<div class="container">
-				{% comment %} <section>
-					<header>
-						<h2>Get in touch</h2>
-						<span class="byline">Integer sit amet pede vel arcu aliquet pretium</span>
-					</header>
-					<ul class="contact">
-						<li><a href="#" class="fa fa-twitter"><span>Twitter</span></a></li>
-						<li class="active"><a href="#" class="fa fa-facebook"><span>Facebook</span></a></li>
-						<li><a href="#" class="fa fa-dribbble"><span>Pinterest</span></a></li>
-						<li><a href="#" class="fa fa-tumblr"><span>Google+</span></a></li>
-					</ul>
-				</section> {% endcomment %}
 			</div>
 		</div>
 
