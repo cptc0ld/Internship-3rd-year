@@ -16,7 +16,6 @@
         </a>
     </section> 
     {% comment %} <button class="dropbtn">Dropdown</button> {% endcomment %}
-    {% block items %}
     <div class="dropdown-content">
         {% for ci in cartitems %}
           {% if ci.catname == c.catname %}
@@ -24,7 +23,6 @@
           {% endif %}
         {% endfor %}
       </div>   
-    {% endblock items %}
   
 </div>
 
@@ -64,18 +62,17 @@
   position: absolute;
   left: -50%;
   text-align: center;
-  background-color: #f9f9f9;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-
+  background: rgba(51,50,50, 0.9);
 }
 
 .dropdown-content a {
   text-align: center;
-  color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: ruby-base;
+  color: #b3abab
 }
 
 .dropdown-content a:hover {background-color: #f1f1f1}
