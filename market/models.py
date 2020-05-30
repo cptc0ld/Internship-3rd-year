@@ -3,10 +3,13 @@ from django.db import models
 # Create your models here.
 
 class Category(models.Model):
-    catname = models.CharField(max_length=255)
+    catname = models.CharField(max_length=255, unique = True)
     caticon = models.CharField(max_length=255)
     
-
+class CatItems(models.Model):
+    itemname = models.CharField(max_length=255)
+    catname = models.CharField(max_length=255)
+    
 class Market(models.Model):
     steamid = models.CharField(max_length=17, unique=True)
     personaname = models.CharField(max_length=255)

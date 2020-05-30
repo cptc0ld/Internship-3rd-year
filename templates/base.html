@@ -52,18 +52,19 @@
 				</nav>
                 
 			</div>
-            <div id="content_area">
-                    {% block content %}{% endblock content %}
-                    </div>
+					<div id="content_area">
+
+					</div>
                     <div id="sidebar">
-                    {% block sidebar %}{% endblock sidebar %}
+                    
                     </div>
 			<div class="container"> 
 			<!-- Logo -->
-				{% block logo %}{% endblock logo %}
+				{% block cat %}{% endblock cat %}
+				{% block logo %}{% endblock logo %}	
 			</div>
 		</div>
-
+{% block items %}{% endblock items %}
 	<!-- Featured -->
 		{% comment %} <div id="featured">
 			<div class="container">
@@ -99,10 +100,10 @@
 	<!-- Main -->
 		{% comment %} <div id="main"> {% endcomment %}
             {% block inventory %}{% endblock inventory %}
-            {% block market %}{% endblock market %}
 			{% block savetl %}{% endblock savetl %}
 			{% block tradelink %}{% endblock tradelink %}
-			{% block cat %}{% endblock cat %}
+			
+			{% block market %}{% endblock market %}
 		{% comment %} </div> {% endcomment %}
 
 	<!-- Tweet -->

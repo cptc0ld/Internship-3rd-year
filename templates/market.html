@@ -4,24 +4,93 @@
 
 {% block cat %}
 {% load static %}
-<div class="row center-text">
+<div class="row category">
 {% for c in cat %}
-    <section class="2u item">
+<div class="dropdown">
+    <section class="3i item">
         <a href="#">
             {% with 'images/'|add:c.caticon as image_static %}
-                <img src = "{% static image_static %}" height = '100px' width = '150px'/>
+                <img src = "{% static image_static %}" height = '50px' width = '75px'/>
             {% endwith %}
-            <h6 class="" style=""> {{c.catname}} </h6>
+            <h6 class="dropbtn" style=""> {{c.catname}} </h6>
         </a>
-        
-    </section>
+    </section> 
+    {% comment %} <button class="dropbtn">Dropdown</button> {% endcomment %}
+    {% block items %}
+    <div class="dropdown-content">
+        {% for ci in cartitems %}
+          {% if ci.catname == c.catname %}
+            <a href="#">{{ci.itemname}}</a>
+          {% endif %}
+        {% endfor %}
+      </div>   
+    {% endblock items %}
+  
+</div>
+
 {% endfor %}
+
 </div>
 
 <style>
-.center-text {
+.category {
+  {% comment %} text-align: center;
+  text-justify: inter-word; {% endcomment %}
+  display: inline-block;
+  margin: auto auto;
+  {% comment %} width: 100%; {% endcomment %}
+  background: rgb(51,50,50);
+  background: radial-gradient(circle, rgba(51,50,50,1) 13%, rgba(42,41,41,1) 55%, rgba(41,40,40,1) 58%, rgba(22,22,22,1) 93%);
+  padding: 20px 0px;
+}
+
+.dropbtn {
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 0px 30px;
+}
+
+.dropdown-content {
+  display: none;
+  grid-template-columns: auto auto auto auto auto;
+  padding: 10px;
+  position: absolute;
+  left: -50%;
   text-align: center;
-  text-justify: inter-word;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+
+}
+
+.dropdown-content a {
+  text-align: center;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: ruby-base;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: grid; 
+}
+
+.dropdown:hover .dropbtn {
+  
+}
+
+.item{
+  display: inline-block;
+  margin: 0 auto;
 }
 </style>
 {% endblock cat %}

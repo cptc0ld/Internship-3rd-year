@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
-from . import models
+from .models import CatItems, Item, Category
 import json
 from inventory import urls
 # Create your views here.
 
 def market(request):
-    items = models.Item.objects.all()
-    cat = models.Category.objects.all()
-    return render(request, 'market.html', {'items': items, 'cat' : cat})
+    items = Item.objects.all()
+    cat = Category.objects.all()
+    cartitems = CatItems.objects.all()
+    print(cartitems)
+    return render(request, 'market.html', {'items': items, 'cat' : cat, 'cartitems': cartitems})
     
 
 def sellitem(request):
