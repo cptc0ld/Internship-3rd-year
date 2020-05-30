@@ -7,8 +7,9 @@ from inventory import urls
 
 def market(request):
     items = models.Item.objects.all()
-    return render(request, 'market.html', {'items': items})
-
+    cat = models.Category.objects.all()
+    return render(request, 'market.html', {'items': items, 'cat' : cat})
+    
 
 def sellitem(request):
     data=request.POST.get("data")

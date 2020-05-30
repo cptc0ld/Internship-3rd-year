@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'social_django',
     'inventory',
     'market',
+    'items',
 ]
 
 MIDDLEWARE = [

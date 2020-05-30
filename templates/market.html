@@ -1,7 +1,36 @@
 {% extends 'base.html' %}
 
 
+
+{% block cat %}
+{% load static %}
+<div class="row center-text">
+{% for c in cat %}
+    <section class="2u item">
+        <a href="#">
+            {% with 'images/'|add:c.caticon as image_static %}
+                <img src = "{% static image_static %}" height = '100px' width = '150px'/>
+            {% endwith %}
+            <h6 class="" style=""> {{c.catname}} </h6>
+        </a>
+        
+    </section>
+{% endfor %}
+</div>
+
+<style>
+.center-text {
+  text-align: center;
+  text-justify: inter-word;
+}
+</style>
+{% endblock cat %}
+
+
+
+
 {% block market %}
+
 <div id="content" class="container"> 
         <div class="row">
                 {% for item in items %} 
