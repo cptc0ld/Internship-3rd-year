@@ -14,13 +14,28 @@ def market(request):
     
 
 def sellitem(request):
-    data=request.POST.get("data")
-    data = eval(data)
-    no_of_item = models.Item.objects.filter(assetid = data["assetid"]).count()
-    print(no_of_item)
-    if(no_of_item):
-        return HttpResponse("already exist")
+    data = request.POST.get("data")
+    data2 = request.POST.get("data2")
+    if(data):
+        data = eval(data)
+        assetid = data["items"][0]["assetid"]
+        no_of_item = Item.objects.filter(assetid = assetid).count()
+        print(no_of_item)
+        if(no_of_item):
+            return HttpResponse("already exist")
+        else:
+            item = Item.objects.createitem(data, 0)
+            item.save()
+            return redirect('/')
     else:
-        item = models.Item.objects.createitem(data)
-        item.save()
-        return redirect('/')
+        index = (int(data2[-1]) -1)
+        data2 = eval(data2[:-1])
+        no_of_item = Item.objects.filter(assetid = data2["items"][index]["assetid"]).count()
+        print(no_of_item)
+        if(no_of_item):
+            return HttpResponse("already exist")
+        else:
+            item = Item.objects.createitem(data2, index)
+            item.save()
+            return redirect('/')
+        return HttpResponse("more than 1 items")

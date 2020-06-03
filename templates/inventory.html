@@ -15,11 +15,14 @@ items
 } 
 {% endcomment %}
 {% block inventory %}
+
 <div id="content" class="container"> 
     <form action="{% url "market:sellitem" %}" method="post">
-    <input type="submit" class="submit_btn btn label-success" value="Sell" />
         {% csrf_token %}    
         {{ form }}
+        <div id="over">
+            <input type="submit" class="submit_btn btn label-success" value="Sell" />
+        </div>
         <div class="row2">
          {% for d in data %} 
                 {% if  d.tradable %} 
@@ -44,8 +47,7 @@ items
                                         <a class="asset"  href="#{{d.appid}}_{{d.contextid}}_{{ asset.assetid}}">
                                                 <img class = "itemimg" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
                                                 <h6> {{d.market_name}} </h6>
-                                                <input type="hidden" name = "asset" value- "{{asset}}"/>
-                                                <input type="radio" name = "data2" value="{{d}}"/>
+                                        <input type="radio" name = "data2" value="{{d}}{{forloop.counter}}"/>
                                         </a>
                                 {% endfor %}
                             </div>   
@@ -72,7 +74,6 @@ items
     </form>	
 </div>
 
-   
 <script type='text/javascript'>
 $('input').prop('checked', false);
     var flag  = 0;
@@ -127,11 +128,21 @@ var flag2 = 0
 
     });
 
-
-
 </script>
 <style>
+div#over {
+  position: sticky;
+  top: 0;
+  background-color: rgba(0,0,0,0.2)
+  padding: 50px;
+  font-size: 20px;
+  height: 50px;
+  z-index: 5
+}
 
+.singleitem:hover{
+    opacity: 0.6;
+}
 .row2{
     display: flex;
   flex-wrap: wrap;

@@ -28,7 +28,7 @@ class Market(models.Model):
 
 
 class ItemManager(models.Manager):
-    def createitem(self, data):
+    def createitem(self, data, i):
         print(data)
         item = self.model(steamid = data['steamid'])
         item.personaname = data['personaname']
@@ -37,7 +37,7 @@ class ItemManager(models.Manager):
         item.avatarmedium = data['avatarmedium']
         item.appid = data['appid']
         item.contextid = data['contextid']
-        item.assetid = data['assetid']
+        item.assetid = data["items"][i]["assetid"]
         item.classid = data['classid']
         item.instanceid = data['instanceid']
         item.icon_url = data['icon_url']
