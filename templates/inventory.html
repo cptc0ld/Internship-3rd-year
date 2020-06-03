@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% comment %} 
 items
 {
@@ -19,20 +20,31 @@ items
     <input type="submit" class="submit_btn btn label-success" value="Sell" />
         {% csrf_token %}    
         {{ form }}
-        <div class="row">
+        <div class="row2">
          {% for d in data %} 
-					<section class="3u item">
-                        <a href="#{{d.appid}}_{{d.contextid}}_{{ d.assetid}}">
+                {% if  d.tradable %} 
+                    <div class="items card">
+                        <a href="#{{d.appid}}_{{d.contextid}}_{{ d.items}}">
                                 <img class = "itemimg" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
-                                <h6> {{d.market_name}} </h6>
+                                <h6> {{d.market_name}} x({{d.items|length }}) </h6>
+                                <span> Tradable {{d.tradable}} </span>
                         </a>
                         <input type="radio" name = "data" value="{{d}}"/>
-                    </section>		
-                    {% if forloop.counter|divisibleby:"4" %}
-                        </div>
-                        <div class="row">
-                    {% endif %}
-                    {% endfor %}
+                    </div>		
+                   
+                 {% else %}
+                    <div class="non-tradable-items card">
+                        <a href="#{{d.appid}}_{{d.contextid}}_{{ d.assetid}}">
+                                <img class = "itemimg" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
+                                <h6> {{d.market_name}} x({{d.items|length }})</h6>
+                                <span> Not Tradable {{d.tradable}} </span>
+                        </a>
+                            
+                    </div>		
+                {% endif %}
+					
+               
+        {% endfor %}
 					</section>				
 				</div>		
     </form>	
@@ -40,28 +52,50 @@ items
 
    
 <script type='text/javascript'>
-var flag  = 0;
-$(".item").click(function() {
-    $(this).children().last().prop("checked", true);
-});
+    var flag  = 0;
+    $('.items').click(function() {
+        var rad = $(this).children().last();
+        if(rad.is(':checked')){
+            $(this).children().last().prop("checked", false);
+            $(this).removeClass('red')
+        }
+        else{
+            $(this).children().last().prop("checked", true);
+            if(flag == 1){
+                $('.items').removeClass('red')
+                $(this).addClass('red');
+                flag = 0;
+            }
+            else{
+                $(this).addClass('red');
+            }
+            flag = 1;
+        }
+    });
 
-$('.item').click(function() {
-    if(flag == 1){
-        $('.item').removeClass('red')
-        $(this).addClass('red');
-        flag = 0;
-    }
-    else{
-        $(this).addClass('red');
-    }
-    flag = 1;
-});
+
+
 
 </script>
 <style>
 
-.row{
-    {% comment %} background-color : black {% endcomment %}
+.row2{
+    display: flex;
+  flex-wrap: wrap;
+  {% comment %} background-color: DodgerBlue; {% endcomment %}
+}
+.row2 > .items{
+    background-color: #f1f1f1;
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+}
+
+.row2 > .non-tradable-items{
+  background-color: #f1f1f1;
+  width: 100px;
+  margin: 10px;
+  text-align: center;
 }
 input{
     display: none
@@ -70,9 +104,7 @@ input{
   {% comment %} background: red {% endcomment %}
   opacity : 0.2
 }
-.blank {
-    background : inherit
-}
+
 </style>
 
 {% endblock inventory %}
