@@ -1040,3 +1040,64 @@
 			font-weight: 300;
 			color: rgba(255,255,255,.6);
 		}	
+
+/*********************************************************************************/
+/* dropdowns                                                                    */
+/*********************************************************************************/
+	
+
+		.category {
+			display: inline-block;
+			margin: auto auto;
+			background: rgb(51,50,50);
+			background: radial-gradient(circle, rgba(51,50,50,1) 13%, rgba(42,41,41,1) 55%, rgba(41,40,40,1) 58%, rgba(22,22,22,1) 93%);
+			padding: 20px 0px;
+		  }
+		  
+		  .dropbtn {
+			font-size: 16px;
+			border: none;
+			cursor: pointer;
+		  }
+		  
+		  .dropdown {
+			position: relative;
+			display: inline-block;
+			margin: 0;
+			padding: 0px 30px;
+		  }
+		  
+		  .dropdown-content {
+			display: none;
+			grid-template-columns: auto auto auto auto auto;
+			padding: 10px;
+			position: absolute;
+			left: -50%;
+			text-align: center;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			z-index: 1;
+			background: rgba(51,50,50, 0.9);
+		  }
+		  
+		  .dropdown-content a {
+			text-align: center;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: ruby-base;
+			color: #b3abab
+		  }
+		  
+		  .dropdown-content a:hover {background-color: #f1f1f1}
+		  
+		  .dropdown:hover .dropdown-content {
+			display: grid; 
+		  }
+		  
+		  .dropdown:hover .dropbtn {
+			
+		  }
+		  
+		  .item{
+			display: inline-block;
+			margin: 0 auto;
+		  }

@@ -24,15 +24,37 @@ items
          {% for d in data %} 
                 {% if  d.tradable %} 
                     <div class="items card">
-                        <a href="#{{d.appid}}_{{d.contextid}}_{{ d.items}}">
+                        {% if d.items|length == 1 %}
+                        <div class="singleitem" style="padding: 0">
+                            <a href="#{{d.appid}}_{{d.contextid}}_{{ d.items.0.assetid}}">
+                                    <img class = "itemimg" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
+                                    <h6> {{d.market_name}} x({{d.items|length }}) </h6>
+                                    <span> Tradable {{d.tradable}} </span>
+                            </a>
+                        </div>
+                        {% else %}
+                        <div class="dropdown" style="padding: 0">
+                            <a href="#{{d.appid}}_{{d.contextid}}">
                                 <img class = "itemimg" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
-                                <h6> {{d.market_name}} x({{d.items|length }}) </h6>
+                                <h6 class="dropbtn"> {{d.market_name}} x({{d.items|length }}) </h6>
                                 <span> Tradable {{d.tradable}} </span>
-                        </a>
+                            </a>
+                            <div class="dropdown-content">
+                                {% for asset in d.items %}
+                                        <a class="asset"  href="#{{d.appid}}_{{d.contextid}}_{{ asset.assetid}}">
+                                                <img class = "itemimg" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
+                                                <h6> {{d.market_name}} </h6>
+                                                <input type="hidden" name = "asset" value- "{{asset}}"/>
+                                                <input type="radio" name = "data2" value="{{d}}"/>
+                                        </a>
+                                {% endfor %}
+                            </div>   
+                        </div>
+                        {% endif %}
                         <input type="radio" name = "data" value="{{d}}"/>
                     </div>		
                    
-                 {% else %}
+                {% else %}
                     <div class="non-tradable-items card">
                         <a href="#{{d.appid}}_{{d.contextid}}_{{ d.assetid}}">
                                 <img class = "itemimg" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
@@ -52,27 +74,58 @@ items
 
    
 <script type='text/javascript'>
+$('input').prop('checked', false);
     var flag  = 0;
     $('.items').click(function() {
+        $('.asset').removeClass('red');
+        $('input[name="data2"]').prop('checked', false);
         var rad = $(this).children().last();
+        if($(this).children().first().attr("class") == "singleitem")
+        {
+            if(rad.is(':checked')){
+                $(this).children().last().prop("checked", false);
+                $(this).removeClass('red')
+            }
+            else{
+                $(this).children().last().prop("checked", true);
+                if(flag == 1){
+                    $('.items').removeClass('red')
+                    $(this).addClass('red');
+                    flag = 0;
+                }
+                else{
+                    $(this).addClass('red');
+                }
+                flag = 1;
+            }
+        }
+    });
+var flag2 = 0
+ $('.asset').click(function(e) {
+     e.stopPropagation();
+        $('.items').removeClass('red');
+        $('input[name="data"]').prop('checked', false);
+        var rad = $(this).children().last();
+        console.log(rad)
         if(rad.is(':checked')){
             $(this).children().last().prop("checked", false);
             $(this).removeClass('red')
+            console.log(this)
         }
         else{
             $(this).children().last().prop("checked", true);
-            if(flag == 1){
-                $('.items').removeClass('red')
+            if(flag2 == 1){
+                $('.asset').removeClass('red')
                 $(this).addClass('red');
-                flag = 0;
+                flag2 = 0;
             }
             else{
                 $(this).addClass('red');
             }
-            flag = 1;
+            flag2 = 1;
         }
-    });
 
+    });
 
 
 
@@ -90,7 +143,9 @@ items
   margin: 10px;
   text-align: center;
 }
-
+a{
+  padding: 0px;
+}
 .row2 > .non-tradable-items{
   background-color: #f1f1f1;
   width: 100px;
@@ -104,8 +159,11 @@ input{
   {% comment %} background: red {% endcomment %}
   opacity : 0.2
 }
-
+.asset{
+    text-align: justify;
+}
 </style>
 
 {% endblock inventory %}
+
 
