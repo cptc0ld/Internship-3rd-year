@@ -42,10 +42,7 @@ def sellitem(request):
 
 def sortByWeapons(request):
     weaponname = request.GET.get('weaponname', None)
-    filteredItem = Item.objects.filter(market_name = weaponname).values()
-    # for items in filteredItem:
-    #     print(items)
-    done = "done"
+    filteredItem = Item.objects.filter(weapon_name = weaponname).values()
     print(list(filteredItem))
     return JsonResponse(list(filteredItem), safe=False)
     

@@ -146,7 +146,7 @@ $(".dropdown-content a").click(function () {
 			'<img src = "https://steamcommunity-a.akamaihd.net/economy/image/' + data[i].icon_url + '" width = "100px" height = "100px"> '+
 			'<h6> '+ data[i].market_name +' </h6>'+
 			'</a>'+
-			'<input type="radio" name = "data" value=" ' + data[i] + '"/>'+
+			'<input type="radio" name = "data" value=" ' + JSON.stringify(data[i]) + '"/>'+
 			'</section>')				
 
 			if((i%4)+1 == 0){

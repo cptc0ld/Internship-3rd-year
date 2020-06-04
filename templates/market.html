@@ -6,7 +6,7 @@
 {% for c in cat %}
 <div class="dropdown">
     <section class="3i item">
-        <a href="#">
+        <a href="javascript:void(0);">
             {% with 'images/'|add:c.caticon as image_static %}
                 <img src = "{% static image_static %}" height = '50px' width = '75px'/>
             {% endwith %}
@@ -17,7 +17,7 @@
     <div class="dropdown-content">
         {% for ci in cartitems %}
           {% if ci.catname == c.catname %}
-            <a href="#">{{ci.itemname}}</a>
+            <a href="javascript:void(0);">{{ci.itemname}}</a>
           {% endif %}
         {% endfor %}
       </div>   

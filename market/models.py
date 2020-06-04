@@ -28,6 +28,9 @@ class Market(models.Model):
 
 
 class ItemManager(models.Manager):
+    def getWeaponName(x):
+        return x.split(' |')[0]
+
     def createitem(self, data, i):
         print(data)
         item = self.model(steamid = data['steamid'])
@@ -42,7 +45,7 @@ class ItemManager(models.Manager):
         item.instanceid = data['instanceid']
         item.icon_url = data['icon_url']
         item.market_name = data['market_name']
-
+        item.weapon_name = getWeaponName(data['market_name'])
         return item
 class Item(models.Model):
     steamid = models.CharField(max_length=17)
@@ -56,8 +59,8 @@ class Item(models.Model):
     assetid = models.CharField(max_length=30)
     classid = models.CharField(max_length=30)
     instanceid = models.CharField(max_length=30)
-    icon_url = models.SlugField()
+    icon_url = models.SlugField(max_length=255)
     market_name = models.CharField(max_length=255)
-
+    weapon_name = models.CharField(max_length=255)
     objects = ItemManager()
     
