@@ -125,4 +125,44 @@
 		</div>
 
 	</body>
+	<script>
+$(".dropdown-content a").click(function () {
+    
+    var weaponname = this.innerHTML
+    console.log(weaponname)
+    $.ajax({
+    url: '{% url "market:sortByWeapons" %}',
+    data: {
+        'weaponname': weaponname
+    },
+    dataType: 'json',
+    success: function (data) {
+		$(".market").empty();
+        var i = 0;
+		$(".market").append('<div class="row list">');
+		for (i = 0; i < data.length; i++) {
+			console.log(data[i]);
+			$(".list").append('<section class="3u item"> <a href="' + data[i].appid + '_' + data[i].contextid + '_' + data[i].assetid + '">'+
+			'<img src = "https://steamcommunity-a.akamaihd.net/economy/image/' + data[i].icon_url + '" width = "100px" height = "100px"> '+
+			'<h6> '+ data[i].market_name +' </h6>'+
+			'</a>'+
+			'<input type="radio" name = "data" value=" ' + data[i] + '"/>'+
+			'</section>')				
+
+			if((i%4)+1 == 0){
+				$(".market").append('</div">');
+				$(".market").append('<div class="row">');
+			}
+
+		} 
+
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+        console.log(weaponname)
+        alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+    }       
+    });
+
+});
+</script>
 </html>

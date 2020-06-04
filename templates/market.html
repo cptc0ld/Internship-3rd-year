@@ -35,10 +35,9 @@
 
 {% block market %}
 
-<div id="content" class="container"> 
+<div id="content" class="container market"> 
         <div class="row">
                 {% for item in items %} 
-
 					<section class="3u item">
                         <a href="#{{d.appid}}_{{d.contextid}}_{{ d.assetid}}">
                                 <img src = "https://steamcommunity-a.akamaihd.net/economy/image/{{item.icon_url}}" width = "100px" height = "100px"> 
@@ -50,9 +49,9 @@
                         </div>
                         <div class="row">
                     {% endif %}
-                    {% endfor %}
+                {% endfor %}
 					</section>				
-				</div>		
+        </div>		
 </div>
                         
 <style>

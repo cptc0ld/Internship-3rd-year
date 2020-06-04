@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import CatItems, Item, Category
 import json
 from inventory import urls
@@ -39,3 +39,13 @@ def sellitem(request):
             item.save()
             return redirect('/')
         return HttpResponse("more than 1 items")
+
+def sortByWeapons(request):
+    weaponname = request.GET.get('weaponname', None)
+    filteredItem = Item.objects.filter(market_name = weaponname).values()
+    # for items in filteredItem:
+    #     print(items)
+    done = "done"
+    print(list(filteredItem))
+    return JsonResponse(list(filteredItem), safe=False)
+    
