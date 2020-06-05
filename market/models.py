@@ -1,7 +1,9 @@
 from django.db import models
 
 # Create your models here.
-
+def getWeaponName(x):
+        return x.split(' |')[0]
+    
 class Category(models.Model):
     catname = models.CharField(max_length=255, unique = True)
     caticon = models.CharField(max_length=255)
@@ -28,8 +30,7 @@ class Market(models.Model):
 
 
 class ItemManager(models.Manager):
-    def getWeaponName(x):
-        return x.split(' |')[0]
+    
 
     def createitem(self, data, i):
         print(data)
