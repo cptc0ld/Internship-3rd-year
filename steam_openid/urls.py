@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^', include('authentication.urls', namespace='auth')),
     url(r'^', include('inventory.urls', namespace='invo')),
     url(r'^', include('market.urls', namespace='market')),
+    url(r'^', include('wallet.urls', namespace='wallet')),
 ]
 

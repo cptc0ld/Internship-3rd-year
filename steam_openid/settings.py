@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'authentication',
     'social_django',
     'inventory',
-    'market'
+    'market',
+    'wallet'
 ]
 
 MIDDLEWARE = [

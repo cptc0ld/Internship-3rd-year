@@ -17,7 +17,7 @@ class LogoutView(View):
 def tradelink(request, steamid = None):
     if(steamid):
         user = models.SteamUser.objects.get(steamid = steamid)
-
+        print(user.tradeurl)
         return render(request, 'tradelink.html', {'url' : user.tradeurl})
     else:
         return redirect('auth:index')
