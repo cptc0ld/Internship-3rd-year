@@ -32,7 +32,7 @@ class Market(models.Model):
 class ItemManager(models.Manager):
     
 
-    def createitem(self, data, i):
+    def createitem(self, data,price, i):
         print(data)
         item = self.model(steamid = data['steamid'])
         item.personaname = data['personaname']
@@ -47,6 +47,7 @@ class ItemManager(models.Manager):
         item.icon_url = data['icon_url']
         item.market_name = data['market_name']
         item.weapon_name = getWeaponName(data['market_name'])
+        item.price = price
         return item
 class Item(models.Model):
     steamid = models.CharField(max_length=17)
@@ -63,5 +64,6 @@ class Item(models.Model):
     icon_url = models.SlugField(max_length=255)
     market_name = models.CharField(max_length=255)
     weapon_name = models.CharField(max_length=255)
+    price = models.IntegerField(max_length=100)
     objects = ItemManager()
     

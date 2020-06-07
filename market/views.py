@@ -16,6 +16,7 @@ def market(request):
 def sellitem(request):
     data = request.POST.get("data")
     data2 = request.POST.get("data2")
+    price = request.POST.get("price")
     if(data):
         data = eval(data)
         assetid = data["items"][0]["assetid"]
@@ -24,7 +25,7 @@ def sellitem(request):
         if(no_of_item):
             return HttpResponse("already exist")
         else:
-            item = Item.objects.createitem(data, 0)
+            item = Item.objects.createitem(data,price, 0)
             item.save()
             return redirect('/')
     else:
@@ -35,7 +36,7 @@ def sellitem(request):
         if(no_of_item):
             return HttpResponse("already exist")
         else:
-            item = Item.objects.createitem(data2, index)
+            item = Item.objects.createitem(data2,price, index)
             item.save()
             return redirect('/')
         return HttpResponse("more than 1 items")

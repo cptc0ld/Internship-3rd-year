@@ -39,9 +39,10 @@
         <div class="row">
                 {% for item in items %} 
 					<section class="3u item">
-                        <a href="#{{d.appid}}_{{d.contextid}}_{{ d.assetid}}">
+                        <a href="#{{item.appid}}_{{item.contextid}}_{{item.assetid}}" data-toggle="modal" data-target="#myModal" >
                                 <img src = "https://steamcommunity-a.akamaihd.net/economy/image/{{item.icon_url}}" width = "100px" height = "100px"> 
                                 <h6> {{item.market_name}} </h6>
+                                <h7> {{item.price}} </h7>
                         </a>
                         <input type="radio" name = "data" value="{{d}}"/>
                     </section>		
@@ -53,9 +54,44 @@
 					</section>				
         </div>		
 </div>
-                        
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Purchase the item</h4>
+        </div>
+        <div class="modal-body">
+          <p id="price"> </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>         
+
+<script>
+// var assetid = "";
+//     console.log(assetid);
+    // $.ajax({
+    // url: '{% url "wallet:getbalance" %}',
+    // data: {
+    //     'steamid': steamid
+    // },
+    // dataType: 'json',
+    // success: function (data) {
+    //         obj = JSON.parse(data);
+	// 		document.getElementById("bal").innerHTML = obj["balance"];
+
+	// 	} 
+    // });
+</script>
 <style>
-input{
+input[type="radio"]{
     display: none
 }
 </style>
