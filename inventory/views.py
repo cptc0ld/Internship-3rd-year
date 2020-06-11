@@ -31,7 +31,6 @@ def invo(request, steamid = None):
             assets["amount"] = x["amount"]
             context2.append(assets)
         for x in j['descriptions']:
-            # print(x)
             description = dict()
             description['appid'] = x['appid']
             description['classid'] = x['classid']
@@ -64,8 +63,6 @@ def invo(request, steamid = None):
                     # x["amount"] = y["amount"]
 
         context2.sort(key = lambda i: i['classid'])
-        # import pprint
-        # pprint.pprint(context1[70])
         content = {
             'data' : context1
         }

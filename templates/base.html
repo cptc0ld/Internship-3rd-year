@@ -143,9 +143,9 @@
 			$(".market").append('<div class="row list">');
 			for (i = 0; i < data.length; i++) {
 				console.log(data[i]);
-				$(".list").append('<section class="3u item"> <a href="' + data[i].appid + '_' + data[i].contextid + '_' + data[i].assetid + '">'+
+				$(".list").append('<section class="3u item"> <a href="' + data[i].name + '-'+ data[i].wear + '">'+
 				'<img src = "https://steamcommunity-a.akamaihd.net/economy/image/' + data[i].icon_url + '" width = "100px" height = "100px"> '+
-				'<h6> '+ data[i].market_name +' </h6>'+
+				'<h6> '+ data[i].name +' </h6>'+
 				'</a>'+
 				'<input type="radio" name = "data" value=" ' + JSON.stringify(data[i]) + '"/>'+
 				'</section>')				

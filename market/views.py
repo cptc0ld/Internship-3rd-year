@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, JsonResponse
-from .models import CatItems, Item, Category
+from .models import CatItems, Item, Category, ItemCategory
 import json
 from inventory import urls
 # Create your views here.
@@ -9,7 +9,6 @@ def market(request):
     items = Item.objects.all()
     cat = Category.objects.all()
     cartitems = CatItems.objects.all()
-    print(cartitems)
     return render(request, 'market.html', {'items': items, 'cat' : cat, 'cartitems': cartitems})
     
 
@@ -21,7 +20,6 @@ def sellitem(request):
         data = eval(data)
         assetid = data["items"][0]["assetid"]
         no_of_item = Item.objects.filter(assetid = assetid).count()
-        print(no_of_item)
         if(no_of_item):
             return HttpResponse("already exist")
         else:
@@ -32,7 +30,6 @@ def sellitem(request):
         index = (int(data2[-1]) -1)
         data2 = eval(data2[:-1])
         no_of_item = Item.objects.filter(assetid = data2["items"][index]["assetid"]).count()
-        print(no_of_item)
         if(no_of_item):
             return HttpResponse("already exist")
         else:
@@ -43,7 +40,6 @@ def sellitem(request):
 
 def sortByWeapons(request):
     weaponname = request.GET.get('weaponname', None)
-    filteredItem = Item.objects.filter(weapon_name = weaponname).values()
-    print(list(filteredItem))
+    filteredItem = ItemCategory.objects.filter(weapon_name = weaponname).values()
     return JsonResponse(list(filteredItem), safe=False)
     

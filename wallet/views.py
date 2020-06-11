@@ -10,5 +10,4 @@ def balance(request):
 def getbalance(request):
     steamid = request.GET.get('steamid', None)
     filteredItem = SteamUser.objects.get(steamid = steamid)
-    print(filteredItem.current_balance)
     return JsonResponse('{"steamid" : '+ steamid + ', "balance": ' + str(filteredItem.current_balance) + '}', safe=False)
