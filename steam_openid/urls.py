@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^', include('inventory.urls', namespace='invo')),
     url(r'^', include('market.urls', namespace='market')),
     url(r'^', include('wallet.urls', namespace='wallet')),
+    url(r'^', include('markettransactions.urls', namespace='markettransactions')),
 ]
 

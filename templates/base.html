@@ -24,6 +24,69 @@
         <link rel="stylesheet" href="{% static 'css/skel-noscript.css'%}" />
         <link rel="stylesheet" href="{% static 'css/style.css'%}">
         <link rel="stylesheet" href="{% static 'css/style-desktop.css'%}"/>
+			<script>
+
+$( document ).ready(function() {
+	$(".dropdown-content a").click(function () {
+		
+		var weaponname = this.innerHTML
+		console.log(weaponname)
+		$.ajax({
+		url: '{% url "market:sortByWeapons" %}',
+		data: {
+			'weaponname': weaponname
+		},
+		dataType: 'json',
+		success: function (data) {
+			$(".market").empty();
+			var i = 0;
+			$(".market").append('<div class="row list">');
+			for (i = 0; i < data.length; i++) {
+				console.log(data[i]);
+				$(".list").append('<section class="3u item"> <a href="' + data[i].name + '-'+ data[i].wear + '">'+
+				'<img src = "https://steamcommunity-a.akamaihd.net/economy/image/' + data[i].icon_url + '" width = "100px" height = "100px"> '+
+				'<h6> '+ data[i].name +' </h6>'+
+				'</a>'+
+				'<input type="radio" name = "data" value=" ' + JSON.stringify(data[i]) + '"/>'+
+				'</section>')				
+
+				if((i%4)+1 == 0){
+					$(".market").append('</div">');
+					$(".market").append('<div class="row">');
+				}
+
+			} 
+
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) { 
+			console.log(weaponname)
+			alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+		}       
+		});
+
+	});
+
+{% comment %} *********************************************************** {% endcomment %}
+{% comment %} *********************************************************** {% endcomment %}
+	getBal();
+	function getBal(){
+	var steamid = "{{user.steamid}}";
+	console.log(steamid);
+	$.ajax({
+	url: '{% url "wallet:getbalance" %}',
+	data: {
+		'steamid': steamid
+	},
+	dataType: 'json',
+	success: function (data) {
+			obj = JSON.parse(data);
+			document.getElementById("bal").innerHTML = obj["balance"];
+			return obj["balance"];
+		} 
+	});
+}
+});
+</script>
 	</head>
 	<body class="homepage">
 	<!-- Header -->
@@ -124,63 +187,5 @@
 		</div>
 
 	</body>
-	<script>
 
-
-	$(".dropdown-content a").click(function () {
-		
-		var weaponname = this.innerHTML
-		console.log(weaponname)
-		$.ajax({
-		url: '{% url "market:sortByWeapons" %}',
-		data: {
-			'weaponname': weaponname
-		},
-		dataType: 'json',
-		success: function (data) {
-			$(".market").empty();
-			var i = 0;
-			$(".market").append('<div class="row list">');
-			for (i = 0; i < data.length; i++) {
-				console.log(data[i]);
-				$(".list").append('<section class="3u item"> <a href="' + data[i].name + '-'+ data[i].wear + '">'+
-				'<img src = "https://steamcommunity-a.akamaihd.net/economy/image/' + data[i].icon_url + '" width = "100px" height = "100px"> '+
-				'<h6> '+ data[i].name +' </h6>'+
-				'</a>'+
-				'<input type="radio" name = "data" value=" ' + JSON.stringify(data[i]) + '"/>'+
-				'</section>')				
-
-				if((i%4)+1 == 0){
-					$(".market").append('</div">');
-					$(".market").append('<div class="row">');
-				}
-
-			} 
-
-		},
-		error: function(XMLHttpRequest, textStatus, errorThrown) { 
-			console.log(weaponname)
-			alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-		}       
-		});
-
-	});
-
-{% comment %} *********************************************************** {% endcomment %}
-{% comment %} *********************************************************** {% endcomment %}
-	var steamid = "{{user.steamid}}";
-    console.log(steamid);
-    $.ajax({
-    url: '{% url "wallet:getbalance" %}',
-    data: {
-        'steamid': steamid
-    },
-    dataType: 'json',
-    success: function (data) {
-            obj = JSON.parse(data);
-			document.getElementById("bal").innerHTML = obj["balance"];
-
-		} 
-    });
-</script>
 </html>

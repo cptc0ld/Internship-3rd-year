@@ -96,11 +96,6 @@ class SteamUser(AbstractBaseUser, PermissionsMixin):
         """
         if value > self.current_balance:
             raise InsufficientBalance('This wallet has insufficient balance.')
-
-        self.transaction_set.create(
-            value=-value,
-            running_balance=self.current_balance - value
-        )
         self.current_balance -= value
         self.save()
 

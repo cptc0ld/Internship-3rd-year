@@ -39,7 +39,7 @@
         <div class="row">
                 {% for item in items %} 
 					<section class="3u item">
-                        <a href="#{{item.appid}}_{{item.contextid}}_{{item.assetid}}" data-toggle="modal" data-target="#myModal" >
+                        <a data-id="{{item.appid}},{{item.contextid}},{{item.assetid}}" class = "modalloader" data-toggle="modal" data-target="#myModal" >
                                 <img src = "https://steamcommunity-a.akamaihd.net/economy/image/{{item.icon_url}}" width = "100px" height = "100px"> 
                                 <h6> {{item.market_name}} </h6>
                                 <h7> {{item.price}} </h7>
@@ -61,13 +61,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Purchase the item</h4>
+          <h4 class="modal-title">Buy Order </h4>
         </div>
         <div class="modal-body">
-          <p id="price"> </p>
+          <p id="desc">Purchase this item for Rs.<span id="price"></span></p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success buy" data-dismiss="modal">Buy</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
       </div>
       
@@ -75,20 +76,75 @@
   </div>         
 
 <script>
-// var assetid = "";
-//     console.log(assetid);
-    // $.ajax({
-    // url: '{% url "wallet:getbalance" %}',
-    // data: {
-    //     'steamid': steamid
-    // },
-    // dataType: 'json',
-    // success: function (data) {
-    //         obj = JSON.parse(data);
-	// 		document.getElementById("bal").innerHTML = obj["balance"];
 
-	// 	} 
-    // });
+$('.buy').on('click', function(){
+  var id = $(this).data('id');
+  var item = id.split(",");
+  var assetid = item[2];
+  var appid = item[0];
+  var contextid = item[1];
+  $.ajax({
+      url: '{% url "market:purchseitem" %}',
+      data: {
+          'assetid': assetid,
+          'appid': appid,
+          'contextid': contextid,
+          'steamid': '{{user.steamid}}'
+      },
+      dataType: 'json ',
+      success: function (data) {
+        console.log(data)
+        getBal();
+      }
+    });
+});
+  $('.modalloader').on('click', function(){
+  var id = $(this).data('id');
+  var item = id.split(",");
+  var assetid = item[2];
+  var appid = item[0];
+  var contextid = item[1];
+  $('.buy').data('id', id);
+  // console.log(assetid, appid, contextid);
+    $.ajax({
+      url: '{% url "market:getPrice" %}',
+      data: {
+          'assetid': assetid,
+          'appid': appid,
+          'contextid': contextid
+      },
+      dataType: 'json',
+      success: function (data) {
+        document.getElementById("price").innerText = (data[0]["price"])
+        console.log(getBal())
+        if(getBal()<(data[0]["price"])){
+          $('.buy').prop('disabled', true);
+        }
+        else{
+          $('.buy').prop('disabled', false);
+        }
+      }
+    });
+});
+
+function getBal(){
+	var steamid = "{{user.steamid}}";
+  var balance = 0;
+	$.ajax({
+  url: '{% url "wallet:getbalance" %}',
+  async: false,
+	data: {
+		'steamid': steamid
+	},
+	dataType: 'json',
+	success: function (data) {
+      obj = JSON.parse(data);
+			document.getElementById("bal").innerHTML = obj["balance"];
+      balance = obj["balance"];
+		} 
+  });
+  return balance;
+};
 </script>
 <style>
 input[type="radio"]{

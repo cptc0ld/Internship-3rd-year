@@ -8,4 +8,6 @@ urlpatterns = [
     path("market/", views.market, name='market'),
     path("sellitem/", views.sellitem, name='sellitem'),
     path("sortByWeapons/", views.sortByWeapons, name='sortByWeapons'),
+    path("getPrice/", views.getPrice, name='getPrice'),
+    path("purchseitem/", views.purchseitem, name='purchseitem'),
 ]

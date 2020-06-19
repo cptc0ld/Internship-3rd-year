@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, JsonResponse
 from .models import CatItems, Item, Category, ItemCategory
+from authentication.models import SteamUser
 import json
 from inventory import urls
 # Create your views here.
@@ -42,4 +43,46 @@ def sortByWeapons(request):
     weaponname = request.GET.get('weaponname', None)
     filteredItem = ItemCategory.objects.filter(weapon_name = weaponname).values()
     return JsonResponse(list(filteredItem), safe=False)
-    
+
+def getPrice(request):
+    assetid = request.GET.get('assetid', None)
+    contextid = request.GET.get('contextid', None)
+    appid = request.GET.get('appid', None)
+
+    filteredItem = Item.objects.filter(assetid = assetid).values()
+    # print(filteredItem) 
+    return JsonResponse(list(filteredItem), safe=False)
+
+def purchseitem(request):
+    assetid = request.GET.get('assetid', None)
+    contextid = request.GET.get('contextid', None)
+    appid = request.GET.get('appid', None)
+    filteredItem = Item.objects.filter(assetid = assetid).values()
+    if(len(filteredItem)):
+        message = ""
+        code = 0
+        print("avalaible")
+        steamid = request.GET.get('steamid', None)
+        try:
+            user = SteamUser.objects.get(steamid = steamid)
+        except:
+            message += "| There is some error."
+            code = 0
+
+        try:
+            if(user.current_balance > filteredItem[0]['price']):
+                message = "Balance is deducted, User will send you the Trade"
+                code = 1
+                user.withdraw(filteredItem[0]['price'])
+            else:
+                message += "| Insufficiant balance"
+        except:
+            message += "| There is some error. Balance is not deducted"
+            code = 0
+    else:
+        print("not availables")
+    resonsejson = '''{
+        "status" : '''+ str(code) + ''',
+        "message": '''+ str(message) + '''
+    }'''
+    return JsonResponse(resonsejson, safe=False)
