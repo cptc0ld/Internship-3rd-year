@@ -4,6 +4,7 @@ from .models import CatItems, Item, Category, ItemCategory
 from authentication.models import SteamUser
 import json
 from inventory import urls
+from notifications.signals import notify
 # Create your views here.
 
 def market(request):
@@ -66,7 +67,7 @@ def purchseitem(request):
         try:
             user = SteamUser.objects.get(steamid = steamid)
         except:
-            message += "| There is some error."
+            message = "There is some error."
             code = 0
 
         try:
@@ -74,15 +75,18 @@ def purchseitem(request):
                 message = "Balance is deducted, User will send you the Trade"
                 code = 1
                 user.withdraw(filteredItem[0]['price'])
+                print(filteredItem[0]["steamid"])
+                try:
+                    seller = SteamUser.objects.get(steamid = filteredItem[0]["steamid"])
+                except:
+                    message = "Seller Not Found"
+                print(seller)
+                notify.send(request.user, recipient=seller, verb='Please send the Item to ' + user.personaname)
             else:
-                message += "| Insufficiant balance"
+                message = "Insufficiant balance"
         except:
-            message += "| There is some error. Balance is not deducted"
             code = 0
     else:
         print("not availables")
-    resonsejson = '''{
-        "status" : '''+ str(code) + ''',
-        "message": '''+ str(message) + '''
-    }'''
-    return JsonResponse(resonsejson, safe=False)
+    responsejson = '{"status" :'+ str(code) + ',"message":"'+str(message)+'"}'
+    return JsonResponse(responsejson, safe=False)

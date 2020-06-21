@@ -2,6 +2,7 @@
 
 {% block cat %}
 {% load static %}
+<script src="{% static 'js/notify.js' %}"></script>
 <div class="row category">
 {% for c in cat %}
 <div class="dropdown">
@@ -20,7 +21,7 @@
             <a href="javascript:void(0);">{{ci.itemname}}</a>
           {% endif %}
         {% endfor %}
-      </div>   
+    </div>   
   
 </div>
 
@@ -37,24 +38,40 @@
 
 <div id="content" class="container market"> 
         <div class="row">
-                {% for item in items %} 
-					<section class="3u item">
-                        <a data-id="{{item.appid}},{{item.contextid}},{{item.assetid}}" class = "modalloader" data-toggle="modal" data-target="#myModal" >
-                                <img src = "https://steamcommunity-a.akamaihd.net/economy/image/{{item.icon_url}}" width = "100px" height = "100px"> 
-                                <h6> {{item.market_name}} </h6>
-                                <h7> {{item.price}} </h7>
-                        </a>
-                        <input type="radio" name = "data" value="{{d}}"/>
-                    </section>		
-                    {% if forloop.counter|divisibleby:"4" %}
-                        </div>
-                        <div class="row">
-                    {% endif %}
+          {% for item in items %} 
+              {% if item.steamid == user.steamid %}
+                <section class="3u item">
+                  <div class="parent">
+                      <a data-id="{{item.appid}},{{item.contextid}},{{item.assetid}}" class = "modalloader" data-toggle="modal" data-target="#priceChangeModal" >
+                              <img class="child" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{item.icon_url}}" width = "100px" height = "100px"> 
+                              <h6> {{item.market_name}} </h6>
+                              <h7> {{item.price}} </h7>
+                      </a>
+                      <input type="radio" name = "data" value="{{d}}"/>
+                    <span class="overlay"> Owned </span>
+                  </div>
+                </section>	
+              {% else %}
+                <section class="3u item">
+                  <div class="parent">
+                      <a data-id="{{item.appid}},{{item.contextid}},{{item.assetid}}" class = "buymodalloader" data-toggle="modal" data-target="#buyModal" >
+                              <img class="child" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{item.icon_url}}" width = "100px" height = "100px"> 
+                              <h6> {{item.market_name}} </h6>
+                              <h7> {{item.price}} </h7>
+                      </a>
+                      <input type="radio" name = "data" value="{{d}}"/>
+                  </div>
+                </section>	
+              {% endif %}  	
+                {% if forloop.counter|divisibleby:"4" %}
+                    </div>
+                    <div class="row">
+                {% endif %}
                 {% endfor %}
 					</section>				
         </div>		
 </div>
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="buyModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -83,6 +100,7 @@ $('.buy').on('click', function(){
   var assetid = item[2];
   var appid = item[0];
   var contextid = item[1];
+  console.log(assetid);
   $.ajax({
       url: '{% url "market:purchseitem" %}',
       data: {
@@ -93,12 +111,21 @@ $('.buy').on('click', function(){
       },
       dataType: 'json ',
       success: function (data) {
-        console.log(data)
+        obj = JSON.parse(data);
+        console.log(obj)
+        if(obj["status"]){
+           $.notify(obj["message"], "success ");
+        }
+        else{
+          $.notify(obj["message"], "error")
+        }
+        
         getBal();
       }
     });
+   
 });
-  $('.modalloader').on('click', function(){
+  $('.buymodalloader').on('click', function(){
   var id = $(this).data('id');
   var item = id.split(",");
   var assetid = item[2];
@@ -138,6 +165,7 @@ function getBal(){
 	},
 	dataType: 'json',
 	success: function (data) {
+    console.log(data)
       obj = JSON.parse(data);
 			document.getElementById("bal").innerHTML = obj["balance"];
       balance = obj["balance"];
@@ -145,11 +173,26 @@ function getBal(){
   });
   return balance;
 };
+
+
 </script>
 <style>
 input[type="radio"]{
     display: none
 }
+
+.parent{
+    position: relative;
+}
+
+.parent .overlay{
+    position: absolute; 
+    top: 0;
+    left: 0;  
+    width: 100%;
+    text-align: right;
+}
 </style>
+
 {% endblock market %}
 

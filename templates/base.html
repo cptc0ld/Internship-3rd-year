@@ -17,6 +17,7 @@
 		<script src="{% static 'js/skel.min.js' %}"></script>
 		<script src="{% static 'js/skel-panels.min.js' %}"></script>
 		<script src="{% static 'js/init.js' %}"></script>
+		<script src="{% static 'js/notify.js' %}"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -63,10 +64,68 @@ $( document ).ready(function() {
 			alert("Status: " + textStatus); alert("Error: " + errorThrown); 
 		}       
 		});
-
+		
+ 
 	});
-
 {% comment %} *********************************************************** {% endcomment %}
+{% comment %} For Inbox  {% endcomment %}
+{% comment %} *********************************************************** {% endcomment %}
+	$.ajax({
+			url: '{% url "notifications:live_unread_notification_count" %}',
+			data: {
+			},
+			dataType: 'json',
+			success: function (data) {
+				console.log(data)
+				if(data["unread_count"]){
+					$(".badge").text(data["unread_count"]);
+				}
+				$.ajax({
+					url: '{% url "notifications:live_all_notification_list" %}',
+					data: {
+					},
+					dataType: 'json',
+					success: function (data) {
+						console.log(data)
+						$(".inbox-content").empty();
+						data["all_list"].forEach(element => {
+							var notice;
+							notice = "<div class='inbox-card'>" + element["verb"] + "</div>";
+							$(".inbox-content").append(notice);
+						});
+			
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) { 
+					}       
+					});
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) { 
+			}       
+	});
+	{% comment %} setInterval(function(){
+		$.ajax({
+			url: '{% url "notifications:live_all_notification_list" %}',
+			data: {
+			},
+			dataType: 'json',
+			success: function (data) {
+				console.log(data)
+				$(".inbox-content").empty();
+				data["all_list"].forEach(element => {
+					var notice;
+					notice = "<div>" + element["verb"] + "</div>";
+					$(".inbox-content").append(notice);
+				});
+	
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) { 
+			}       
+			});
+	  }, 5000); {% endcomment %}
+		
+	
+{% comment %} *********************************************************** {% endcomment %}
+{% comment %} For Balance Update {% endcomment %}
 {% comment %} *********************************************************** {% endcomment %}
 	getBal();
 	function getBal(){
@@ -187,5 +246,84 @@ $( document ).ready(function() {
 		</div>
 
 	</body>
-
+	<div class="inbox-container">
+		<div class="inbox-dropdown">
+			<a href="#" class="notification">
+				<span>Inbox</span>
+				<span class="badge"></span>
+			</a>
+		</div>
+		<div class="inbox-content"></div>
+	</div>
 </html>
+
+<style>
+.inbox-dropdown {
+cursor: pointer;
+}
+
+.inbox-container {
+position: relative;
+display: inline-block;
+}
+
+.inbox-content {
+min-height: 0px;
+min-width: 0px;
+max-height: 40%;
+max-width: 40%;
+display: none;
+position: fixed;
+bottom: 80px;
+right: 10px;
+z-index: 1;
+background: rgb(51,50,50);
+border-radius: 5px;
+padding: 10px
+}
+.inbox-card {
+padding: 10px 5px;
+}
+.inbox-container:hover .inbox-content {
+display: block; 
+
+}
+
+.inbox-container:hover .notification .badge {
+display: none; 
+}
+
+.notification:link {
+			background-color: #555;
+			color: white;
+			text-decoration: none;
+			padding: 15px 26px;
+			position: fixed;
+			bottom: 25px;
+			right: 10px;
+			display: inline-block;
+			border-radius: 5px;
+			}
+.notification:visited {
+			text-decoration: none;
+			color: white;
+			}
+.notification:hover {
+  			background: rgb(118, 79, 226);
+			text-decoration: none;
+			color: white;
+			}
+.notification:active {
+			text-decoration: none;
+			color: white;
+}
+.notification .badge {
+			position: absolute;
+			top: -10px;
+			right: -10px;
+			padding: 5px 10px;
+			border-radius: 50%;
+			background-color: red;
+			color: white;
+			}
+</style>

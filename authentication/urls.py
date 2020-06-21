@@ -11,4 +11,5 @@ urlpatterns = [
     path("tradelink/<steamid>/", views.tradelink, name='tl'),
     path("tradelink/", views.tradelink, name='tl'),
     path("savetl/<steamid>/", views.savetl, name='savetl'),
+    path("notification/", views.getNotification, name='notification'),
 ]

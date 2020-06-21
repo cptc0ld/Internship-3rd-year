@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from . import models
 from django.views import View
 from django.http import HttpResponse
-
+import notifications.models as noti
 class IndexView(View):
     def get(self, request):
         return render(request, 'index.html')
@@ -30,3 +30,9 @@ def savetl(request, steamid):
             # user.set_url(tradelink)
             
     return HttpResponse("NOT saved")
+
+def getNotification(request):
+    # steamid = request.user["steamid"]
+    inbox = noti.Notification.objects.all()
+    print(inbox[0])
+    return HttpResponse(inbox, {'msg' : inbox})
