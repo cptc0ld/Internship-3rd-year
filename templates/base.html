@@ -104,23 +104,37 @@ $( document ).ready(function() {
 	});
 	setInterval(function(){
 		$.ajax({
-			url: '{% url "notifications:live_all_notification_list" %}',
+			url: '{% url "notifications:live_unread_notification_count" %}',
 			data: {
 			},
 			dataType: 'json',
 			success: function (data) {
 				console.log(data)
-				$(".inbox-content").empty();
-				data["all_list"].forEach(element => {
-					var notice;
-					notice = "<div>" + element["verb"] + "</div>";
-					$(".inbox-content").append(notice);
-				});
-	
+				if(data["unread_count"]){
+					$(".badge").text(data["unread_count"]);
+				}
+				$.ajax({
+					url: '{% url "notifications:live_all_notification_list" %}',
+					data: {
+					},
+					dataType: 'json',
+					success: function (data) {
+						console.log(data)
+						$(".inbox-content").empty();
+						data["all_list"].forEach(element => {
+							var notice;
+							notice = "<div class='inbox-card'>" + element["verb"] + "</div>";
+							$(".inbox-content").append(notice);
+						});
+			
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) { 
+					}       
+					});
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) { 
 			}       
-			});
+	});
 	  }, 5000);
 		
 	
