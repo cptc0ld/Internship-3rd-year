@@ -102,7 +102,7 @@ $( document ).ready(function() {
 			error: function(XMLHttpRequest, textStatus, errorThrown) { 
 			}       
 	});
-	{% comment %} setInterval(function(){
+	setInterval(function(){
 		$.ajax({
 			url: '{% url "notifications:live_all_notification_list" %}',
 			data: {
@@ -121,7 +121,7 @@ $( document ).ready(function() {
 			error: function(XMLHttpRequest, textStatus, errorThrown) { 
 			}       
 			});
-	  }, 5000); {% endcomment %}
+	  }, 5000);
 		
 	
 {% comment %} *********************************************************** {% endcomment %}
