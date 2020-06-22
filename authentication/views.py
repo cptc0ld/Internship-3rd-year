@@ -30,9 +30,3 @@ def savetl(request, steamid):
             # user.set_url(tradelink)
             
     return HttpResponse("NOT saved")
-
-def getNotification(request):
-    # steamid = request.user["steamid"]
-    inbox = noti.Notification.objects.all()
-    print(inbox[0])
-    return HttpResponse(inbox, {'msg' : inbox})

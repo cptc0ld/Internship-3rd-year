@@ -66,27 +66,34 @@ def purchseitem(request):
         steamid = request.GET.get('steamid', None)
         try:
             user = SteamUser.objects.get(steamid = steamid)
+            u = SteamUser.objects.filter(steamid = steamid).values()
         except:
             message = "There is some error."
             code = 0
 
-        try:
-            if(user.current_balance > filteredItem[0]['price']):
-                message = "Balance is deducted, User will send you the Trade"
-                code = 1
-                user.withdraw(filteredItem[0]['price'])
-                print(filteredItem[0]["steamid"])
-                try:
-                    seller = SteamUser.objects.get(steamid = filteredItem[0]["steamid"])
-                except:
-                    message = "Seller Not Found"
-                print(seller)
-                notify.send(request.user, recipient=seller, verb='Please send the Item to ' + user.personaname)
-            else:
-                message = "Insufficiant balance"
-        except:
+    # try:
+        if(user.current_balance > filteredItem[0]['price']):
+            message = "Balance is deducted, User will send you the Trade"
+            code = 1
+            user.withdraw(filteredItem[0]['price'])
+            print(filteredItem[0]["steamid"])
+            try:
+                seller = SteamUser.objects.get(steamid = filteredItem[0]["steamid"])
+            except:
+                message = "Seller Not Found"
+            print(seller)
+            data = {
+                "item" : filteredItem[0],
+                "buyer" : u[0]
+            }
+            notify.send(request.user, recipient=seller, verb='Please send the ' + filteredItem[0]["market_name"] + ' to <a href = "'+filteredItem[0]["profileurl"] +' ">' + filteredItem[0]["personaname"] + '</a>', data=data)
+        else:
+            message = "Insufficiant balance"
+    # except:
             code = 0
     else:
         print("not availables")
+    if code==1:
+        Item.objects.filter(assetid = assetid).delete()
     responsejson = '{"status" :'+ str(code) + ',"message":"'+str(message)+'"}'
     return JsonResponse(responsejson, safe=False)

@@ -201,3 +201,6 @@ SOCIAL_AUTH_PIPELINE = (
     # Use a custom function for this, since the details are provided separately
     'authentication.pipeline.user_details',
 )
+
+
+DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True}

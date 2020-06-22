@@ -90,7 +90,12 @@ $( document ).ready(function() {
 						$(".inbox-content").empty();
 						data["all_list"].forEach(element => {
 							var notice;
-							notice = "<div class='inbox-card'>" + element["verb"] + "</div>";
+							if(element["unread"]){
+								notice = "<div class='inbox-card'><a href="+element["data"]["data"]["buyer"]["tradeurl"] +">" + element["verb"] + "</a></div> ";
+							}
+							else{
+								notice = "<div class='inbox-card read'>" + element["verb"] + "</div>";
+							}
 							$(".inbox-content").append(notice);
 						});
 			
@@ -112,10 +117,15 @@ $( document ).ready(function() {
 				console.log(data)
 				$(".inbox-content").empty();
 				data["all_list"].forEach(element => {
-					var notice;
-					notice = "<div>" + element["verb"] + "</div>";
-					$(".inbox-content").append(notice);
-				});
+							var notice;
+							if(element["unread"]){
+								notice = "<div class='inbox-card'>" + element["verb"] + "</div>";
+							}
+							else{
+								notice = "<div class='inbox-card read'>" + element["verb"] + "</div>";
+							}
+							$(".inbox-content").append(notice);
+						});
 	
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) { 
@@ -258,6 +268,13 @@ $( document ).ready(function() {
 </html>
 
 <style>
+a, a:link, a:visited, a:hover, a:active{
+	text-decoration: none;
+}
+
+a:hover{
+	color: white;
+}
 .inbox-dropdown {
 cursor: pointer;
 }
@@ -283,6 +300,10 @@ padding: 10px
 }
 .inbox-card {
 padding: 10px 5px;
+}
+.inbox-card.read{
+	background: rgb(36, 35, 35);
+	color: rgb(121, 117, 117);
 }
 .inbox-container:hover .inbox-content {
 display: block; 
