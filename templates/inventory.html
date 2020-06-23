@@ -32,7 +32,9 @@ items
                             <a href="#{{d.appid}}_{{d.contextid}}_{{ d.items.0.assetid}}">
                                     <img class = "itemimg" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
                                     <h6> {{d.market_name}} x({{d.items|length }}) </h6>
-                                    <span> Tradable {{d.tradable}} </span>
+                                        <div class="ribbon">
+	                                        <div class="cr cr-top cr-right cr-sticky cr-blue">Tradable</div>
+                                        </div>
                             </a>
                         </div>
                         {% else %}
@@ -40,7 +42,9 @@ items
                             <a href="#{{d.appid}}_{{d.contextid}}">
                                 <img class = "itemimg" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
                                 <h6 class="dropbtn"> {{d.market_name}} x({{d.items|length }}) </h6>
-                                <span> Tradable {{d.tradable}} </span>
+                                        <div class="ribbon">
+	                                        <div class="cr cr-top cr-right cr-sticky cr-blue">Tradable</div>
+                                        </div>
                             </a>
                             <div class="dropdown-content">
                                 {% for asset in d.items %}
@@ -58,12 +62,15 @@ items
                    
                 {% else %}
                     <div class="non-tradable-items card">
+                        <div class="singleitem">
                         <a href="#{{d.appid}}_{{d.contextid}}_{{ d.assetid}}">
                                 <img class = "itemimg" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{d.icon_url}}" width = "100px" height = "100px"> 
                                 <h6> {{d.market_name}} x({{d.items|length }})</h6>
-                                <span> Not Tradable {{d.tradable}} </span>
+                                        <div class="ribbon">
+	                                        <div class="cr cr-top cr-right cr-sticky cr-yellow">Not Tradable</div>
+                                        </div>
                         </a>
-                            
+                        </div>
                     </div>		
                 {% endif %}
 					
@@ -164,23 +171,79 @@ div#over {
 .singleitem:hover{
     opacity: 0.6;
 }
-.row2{
-    display: flex;
-  flex-wrap: wrap;
-  {% comment %} background-color: DodgerBlue; {% endcomment %}
-}
-.row2 > .card{
-  background-color: #f1f1f1;
-  width: 100px;
-  margin: 10px;
-  text-align: center;
-}
-a{
-  padding: 0px;
+.row2 {
+  background-color: black;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
-input[type="radio"]{
-    display: none
+.row2 .card {
+  background-color: #f1f1f1;
+  text-align: center;
+  height: inherit;
+  width: 200px;
+  height: 250px;
+  margin: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.row2 .card .singleitem {
+  height: inherit;
+  width: inherit;
+}
+
+.row2 .card .singleitem a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: auto;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: inherit;
+  padding: 10px 20px;
+}
+
+.row2 .card .dropdown {
+  height: inherit;
+  width: inherit;
+}
+
+.row2 .card .dropdown a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: auto;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: inherit;
+  padding: 10px 20px;
+}
+
+
+
+input[type="radio"] {
+  display: none;
 }
 .red {
   {% comment %} background: red {% endcomment %}

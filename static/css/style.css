@@ -160,7 +160,6 @@
 		section,
 		article
 		{
-			margin-bottom: 3em;
 		}
 		
 		section > :last-child,
@@ -1130,3 +1129,60 @@
 			background-color: red;
 			color: white;
 		  }
+
+
+
+
+
+/*********************************************************************************/
+/* Ribbons                                                                    */
+/*********************************************************************************/
+		  .ribbon{
+			position: relative;
+		}
+		.cr {
+		  width: 200px;
+		  padding: 5px;
+		  position: absolute;
+		  text-align: center;
+		  color: #f0f0f0;
+		}
+		
+		.mr {
+			width: 200px;
+			padding: 3px;
+			position: absolute;
+			text-align: center;
+			color: #f0f0f0;
+			z-index: -1;
+		  }
+		
+		/* Positions */
+		
+		.cr-top    { top: -195px; }
+		.cr-right  { right: -160px; }
+
+		/* market ribbon Positions */
+		.mr-top    { top: -100px; }
+		.mr-right  { right: -70px; }
+		.mr-top.mr-right {
+			transform: rotate(90deg);
+		  }
+		.cr-top.cr-right {
+		  transform: rotate(45deg);
+		}
+		
+		/* Colors */
+		
+		.r-white     { background-color: #f0f0f0; color: #444; }
+		.r-black     { background-color: #333; }
+		.r-grey      { background-color: #999; }
+		.r-blue      { background-color: #39d; }
+		.r-green     { background-color: #193929; }
+		.r-turquoise { background-color: #1b9; }
+		.r-purple    { background-color: #95b; }
+		.r-red       { background-color: #e43; }
+		.r-orange    { background-color: #e82; }
+		.r-yellow    { background-color: #ec0; }
+		
+		

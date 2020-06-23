@@ -1,0 +1,52 @@
+html{
+    // font-size: 62.5%;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.row2{
+    background-color: black;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    .card{
+        text-align: center;
+        height: inherit;
+        width: 200px;
+        height: 250px;
+        .dropdown{
+            height: inherit;
+            a{
+                display: flex;
+                flex-direction: column;
+                margin: auto;
+                justify-content: space-around;
+                align-items: center;
+                height: inherit;
+                padding: 10px 20px;
+                
+            }
+        }
+        .singleitem{
+            height: inherit;
+            a{
+                display: flex;
+                flex-direction: column;
+                margin: auto;
+                justify-content: space-around;
+                align-items: center;
+                height: inherit;
+                padding: 10px 20px;
+                
+            }
+        }
+    }
+}
+
+input[type="radio"]{
+    display: none
+}

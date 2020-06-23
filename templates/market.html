@@ -36,11 +36,10 @@
 
 {% block market %}
 
-<div id="content" class="container market"> 
-        <div class="row">
+<div class="market-row">
           {% for item in items %} 
               {% if item.steamid == user.steamid %}
-                <section class="3u item">
+                <section class="market-item">
                   <div class="parent">
                       <a data-id="{{item.appid}},{{item.contextid}},{{item.assetid}}" class = "modalloader" data-toggle="modal" data-target="#priceChangeModal" >
                               <img class="child" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{item.icon_url}}" width = "100px" height = "100px"> 
@@ -48,11 +47,13 @@
                               <h7> {{item.price}} </h7>
                       </a>
                       <input type="radio" name = "data" value="{{d}}"/>
-                    <span class="overlay"> Owned </span>
+                    <div class="ribbon">
+	                      <div class="mr mr-top mr-right r-green">Owned</div>
+                    </div>
                   </div>
                 </section>	
               {% else %}
-                <section class="3u item">
+                <section class="market-item">
                   <div class="parent">
                       <a data-id="{{item.appid}},{{item.contextid}},{{item.assetid}}" class = "buymodalloader" data-toggle="modal" data-target="#buyModal" >
                               <img class="child" src = "https://steamcommunity-a.akamaihd.net/economy/image/{{item.icon_url}}" width = "100px" height = "100px"> 
@@ -63,14 +64,9 @@
                   </div>
                 </section>	
               {% endif %}  	
-                {% if forloop.counter|divisibleby:"4" %}
-                    </div>
-                    <div class="row">
-                {% endif %}
                 {% endfor %}
 					</section>				
         </div>		
-</div>
 <div class="modal fade" id="buyModal" role="dialog">
     <div class="modal-dialog">
     
@@ -177,20 +173,19 @@ function getBal(){
 
 </script>
 <style>
+
+.market-row {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
 input[type="radio"]{
     display: none
 }
 
 .parent{
     position: relative;
-}
-
-.parent .overlay{
-    position: absolute; 
-    top: 0;
-    left: 0;  
-    width: 100%;
-    text-align: right;
 }
 </style>
 
