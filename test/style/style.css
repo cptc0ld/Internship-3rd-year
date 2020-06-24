@@ -1,74 +1,22 @@
-* {
-  padding: 0;
-  margin: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
 }
 
-.row2 {
-  background-color: black;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+.active, .collapsible:hover {
+  background-color: #555;
 }
 
-.row2 .card {
-  text-align: center;
-  height: inherit;
-  width: 200px;
-  height: 250px;
-}
-
-.row2 .card .dropdown {
-  height: inherit;
-}
-
-.row2 .card .dropdown a {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  margin: auto;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  height: inherit;
-  padding: 10px 20px;
-}
-
-.row2 .card .singleitem {
-  height: inherit;
-}
-
-.row2 .card .singleitem a {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  margin: auto;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  height: inherit;
-  padding: 10px 20px;
-}
-
-input[type="radio"] {
+.collapsible-content {
+  padding: 0 18px;
   display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
 }
-/*# sourceMappingURL=style.css.map */
