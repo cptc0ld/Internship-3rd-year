@@ -160,7 +160,6 @@
 		section,
 		article
 		{
-			margin-bottom: 3em;
 		}
 		
 		section > :last-child,
@@ -974,72 +973,7 @@
 		color:  rgba(255,255,255,.2);
 	}
 	
-/*********************************************************************************/
-/* Featured                                                                      */
-/*********************************************************************************/
 	
-	#featured
-	{
-		position: relative;
-		background: #f2f2f2;
-		text-align: center;
-	}
-	
-	#featured h3
-	{
-		display: block;
-		font-weight: 300;
-	}
-
-	#featured .pennant
-	{
-		font-size: 4em;
-	}
-	
-	#featured .button
-	{
-		margin-top: 1.5em;
-	}
-
-/*********************************************************************************/
-/* Tweet                                                                         */
-/*********************************************************************************/
-	
-	#tweet
-	{
-		position: relative;
-		text-align: center;
-		background: url(../images/header.jpg) no-repeat center center;
-		background-attachment: fixed;
-		background-size: cover;
-	}
-
-		#tweet:before
-		{
-			content: '';
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			background: rgba(64,64,64,0.5);
-		}
-	
-		#tweet section
-		{
-			border-top: 1px solid;
-			border-bottom: 1px solid;
-			border-color: rgba(255,255,255,.1);
-		}
-
-		#tweet blockquote
-		{
-			position: relative;
-			border: none;
-			margin: 0;
-			font-weight: 300;
-			color: rgba(255,255,255,.6);
-		}	
 
 /*********************************************************************************/
 /* dropdowns                                                                    */
@@ -1130,3 +1064,60 @@
 			background-color: red;
 			color: white;
 		  }
+
+
+
+
+
+/*********************************************************************************/
+/* Ribbons                                                                    */
+/*********************************************************************************/
+		  .ribbon{
+			position: relative;
+		}
+		.cr {
+		  width: 200px;
+		  padding: 3px;
+		  position: absolute;
+		  text-align: center;
+		  color: #f0f0f0;
+		}
+		
+		.mr {
+			width: 200px;
+			padding: 3px;
+			position: absolute;
+			text-align: center;
+			color: #f0f0f0;
+			z-index: -1;
+		  }
+		
+		/* Positions */
+		
+		.cr-top    { top: -195px; }
+		.cr-right  { right: -160px; }
+
+		/* market ribbon Positions */
+		.mr-top    { top: -100px; }
+		.mr-right  { right: -70px; }
+		.mr-top.mr-right {
+			transform: rotate(90deg);
+		  }
+		.cr-top.cr-right {
+		  transform: rotate(45deg);
+		}
+		
+		/* Colors */
+		
+		.r-white     { background-color: #f0f0f0; color: #444; }
+		.r-black     { background-color: #333; }
+		.r-grey      { background-color: #999; }
+		.r-blue      { background-color: #39d; }
+		.r-green     { background-color: #193929; }
+		.r-turquoise { background-color: #1b9; }
+		.r-purple    { background-color: #95b; }
+		.r-red       { background-color: #e43; }
+		.r-orange    { background-color: #e82; }
+		.r-yellow    { background-color: #ec0; }
+		
+		

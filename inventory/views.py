@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.core.paginator import Paginator
+
 import requests 
 import json 
 from authentication.models import SteamUser
@@ -63,9 +65,17 @@ def invo(request, steamid = None):
                     # x["amount"] = y["amount"]
 
         context2.sort(key = lambda i: i['classid'])
+
+
+        paginator = Paginator(context1, 20) # Show 25 contacts per page.
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+            
         content = {
-            'data' : context1
+            'data' : page_obj
         }
+        print(page_obj)
         return render(request, 'inventory.html', content)
     # except:
             # return HttpResponse(str(response) + URL)

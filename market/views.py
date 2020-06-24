@@ -18,6 +18,7 @@ def sellitem(request):
     data = request.POST.get("data")
     data2 = request.POST.get("data2")
     price = request.POST.get("price")
+    print(data)
     if(data):
         data = eval(data)
         assetid = data["items"][0]["assetid"]
