@@ -17,7 +17,7 @@ class LogoutView(View):
 def tradelink(request, steamid = None):
     if(steamid):
         user = models.SteamUser.objects.get(steamid = steamid)
-        return render(request, 'tradelink.html', {'url' : user.tradeurl})
+        return render(request, 'tradelink.html', {'url' : user.tradeurl, 'key' : user.authkey})
     else:
         return redirect('auth:index')
 
@@ -25,6 +25,7 @@ def savetl(request, steamid):
     if(request.method == 'GET'):
             user = models.SteamUser.objects.get(steamid = steamid)
             user.tradeurl = request.GET.get("tradeurl")
+            user.authkey = request.GET.get("authkey")
             user.save()
             return redirect('auth:index')
             # user.set_url(tradelink)

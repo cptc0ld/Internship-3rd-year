@@ -61,6 +61,7 @@ class SteamUser(AbstractBaseUser, PermissionsMixin):
     avatarmedium = models.CharField(max_length=255)
     avatarfull = models.CharField(max_length=255)
     tradeurl = models.CharField(max_length=255)
+    authkey = models.CharField(max_length=255)
     # Add the other fields that can be retrieved from the Web-API if required
     current_balance = CURRENCY_STORE_FIELD(default=0)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)

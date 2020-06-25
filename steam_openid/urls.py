@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^', include('market.urls', namespace='market')),
     url(r'^', include('wallet.urls', namespace='wallet')),
     url(r'^', include('markettransactions.urls', namespace='markettransactions')),
+    url(r'^', include('tradehandler.urls', namespace='tradehandler')),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
 ]
 
