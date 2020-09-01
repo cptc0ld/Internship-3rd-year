@@ -140,30 +140,30 @@ items
 </form>	
 <script type='text/javascript'>
 
-$('.submit_btn').click(function(e){
-    $(this).siblings().last().prop( "checked", true );
+    $('.submit_btn').click(function(e){
+        $(this).siblings().last().prop( "checked", true );
 
-});
-var coll = $(".collapsible");
-    var i;
-    for (i = 0; i < coll.length; i++) {
-        coll.eq(i).click(function(){
-            if($(this).hasClass("active")){
-                $(this).removeClass("active")
-                console.log($('.items > .child-items'))
-                $('.row2 > .child-items').remove()
-            }
-            else{
-                $('.row2 > .child-items').remove()
-                $("div").removeClass("active")
-                this.classList.add("active");
-                var content = this.nextElementSibling;
-                var div = content.innerHTML;    
-                content.parentElement.parentElement.insertAdjacentHTML("afterend", div);
-            }
-        });
-            
-      }
+    });
+    var coll = $(".collapsible");
+        var i;
+        for (i = 0; i < coll.length; i++) {
+            coll.eq(i).click(function(){
+                if($(this).hasClass("active")){
+                    $(this).removeClass("active")
+                    console.log($('.items > .child-items'))
+                    $('.row2 > .child-items').remove()
+                }
+                else{
+                    $('.row2 > .child-items').remove()
+                    $("div").removeClass("active")
+                    this.classList.add("active");
+                    var content = this.nextElementSibling;
+                    var div = content.innerHTML;    
+                    content.parentElement.parentElement.insertAdjacentHTML("afterend", div);
+                }
+            });
+                
+    }
 </script>
 <style>
     .pagination {

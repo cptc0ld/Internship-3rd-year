@@ -25,136 +25,135 @@
         <link rel="stylesheet" href="{% static 'css/skel-noscript.css'%}" />
         <link rel="stylesheet" href="{% static 'css/style.css'%}">
         <link rel="stylesheet" href="{% static 'css/style-desktop.css'%}"/>
-			<script>
+<script>
+	$( document ).ready(function() {
+		$(".dropdown-content a").click(function () {
+			
+			var weaponname = this.innerHTML
+			console.log(weaponname)
+			$.ajax({
+			url: '{% url "market:sortByWeapons" %}',
+			data: {
+				'weaponname': weaponname
+			},
+			dataType: 'json',
+			success: function (data) {
+				$(".market").empty();
+				var i = 0;
+				$(".market").append('<div class="row list">');
+				for (i = 0; i < data.length; i++) {
+					console.log(data[i]);
+					$(".list").append('<section class="3u item"> <a href="' + data[i].name + '-'+ data[i].wear + '">'+
+					'<img src = "https://steamcommunity-a.akamaihd.net/economy/image/' + data[i].icon_url + '" width = "100px" height = "100px"> '+
+					'<h6> '+ data[i].name +' </h6>'+
+					'</a>'+
+					'<input type="radio" name = "data" value=" ' + JSON.stringify(data[i]) + '"/>'+
+					'</section>')				
 
-$( document ).ready(function() {
-	$(".dropdown-content a").click(function () {
-		
-		var weaponname = this.innerHTML
-		console.log(weaponname)
-		$.ajax({
-		url: '{% url "market:sortByWeapons" %}',
+					if((i%4)+1 == 0){
+						$(".market").append('</div">');
+						$(".market").append('<div class="row">');
+					}
+
+				} 
+
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) { 
+				console.log(weaponname)
+				alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+			}       
+			});
+			
+	
+	});
+	{% comment %} *********************************************************** {% endcomment %}
+	{% comment %} For Inbox  {% endcomment %}
+	{% comment %} *********************************************************** {% endcomment %}
+	$.ajax({
+		url: '{% url "notifications:live_unread_notification_count" %}',
 		data: {
-			'weaponname': weaponname
 		},
 		dataType: 'json',
 		success: function (data) {
-			$(".market").empty();
-			var i = 0;
-			$(".market").append('<div class="row list">');
-			for (i = 0; i < data.length; i++) {
-				console.log(data[i]);
-				$(".list").append('<section class="3u item"> <a href="' + data[i].name + '-'+ data[i].wear + '">'+
-				'<img src = "https://steamcommunity-a.akamaihd.net/economy/image/' + data[i].icon_url + '" width = "100px" height = "100px"> '+
-				'<h6> '+ data[i].name +' </h6>'+
-				'</a>'+
-				'<input type="radio" name = "data" value=" ' + JSON.stringify(data[i]) + '"/>'+
-				'</section>')				
-
-				if((i%4)+1 == 0){
-					$(".market").append('</div">');
-					$(".market").append('<div class="row">');
-				}
-
-			} 
+			console.log(data)
+			if(data["unread_count"]){
+				$(".badge").text(data["unread_count"]);
+			}
+			$.ajax({
+				url: '{% url "notifications:live_all_notification_list" %}',
+				data: {
+				},
+				dataType: 'json',
+				success: function (data) {
+					console.log(data)
+					$(".inbox-content").empty();
+					data["all_list"].forEach(element => {
+						var notice;
+						if(element["unread"]){
+							notice = "<div class='inbox-card'><a href="+element["data"]["data"]["buyer"]["tradeurl"] +">" + element["verb"] + "</a></div> ";
+						}
+						else{
+							notice = "<div class='inbox-card read'>" + element["verb"] + "</div>";
+						}
+						$(".inbox-content").append(notice);
+					});
+		
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) { 
+				}       
+				});
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) { 
+		}       
+	});
+	{% comment %} setInterval(function(){
+	$.ajax({
+		url: '{% url "notifications:live_all_notification_list" %}',
+		data: {
+		},
+		dataType: 'json',
+		success: function (data) {
+			console.log(data)
+			$(".inbox-content").empty();
+			data["all_list"].forEach(element => {
+						var notice;
+						if(element["unread"]){
+							notice = "<div class='inbox-card'>" + element["verb"] + "</div>";
+						}
+						else{
+							notice = "<div class='inbox-card read'>" + element["verb"] + "</div>";
+						}
+						$(".inbox-content").append(notice);
+					});
 
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown) { 
-			console.log(weaponname)
-			alert("Status: " + textStatus); alert("Error: " + errorThrown); 
 		}       
 		});
+	}, 5000); {% endcomment %}
+
 		
- 
-	});
-{% comment %} *********************************************************** {% endcomment %}
-{% comment %} For Inbox  {% endcomment %}
-{% comment %} *********************************************************** {% endcomment %}
-	$.ajax({
-			url: '{% url "notifications:live_unread_notification_count" %}',
-			data: {
-			},
-			dataType: 'json',
-			success: function (data) {
-				console.log(data)
-				if(data["unread_count"]){
-					$(".badge").text(data["unread_count"]);
-				}
-				$.ajax({
-					url: '{% url "notifications:live_all_notification_list" %}',
-					data: {
-					},
-					dataType: 'json',
-					success: function (data) {
-						console.log(data)
-						$(".inbox-content").empty();
-						data["all_list"].forEach(element => {
-							var notice;
-							if(element["unread"]){
-								notice = "<div class='inbox-card'><a href="+element["data"]["data"]["buyer"]["tradeurl"] +">" + element["verb"] + "</a></div> ";
-							}
-							else{
-								notice = "<div class='inbox-card read'>" + element["verb"] + "</div>";
-							}
-							$(".inbox-content").append(notice);
-						});
-			
-					},
-					error: function(XMLHttpRequest, textStatus, errorThrown) { 
-					}       
-					});
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) { 
-			}       
-	});
-	{% comment %} setInterval(function(){
+	{% comment %} *********************************************************** {% endcomment %}
+	{% comment %} For Balance Update {% endcomment %}
+	{% comment %} *********************************************************** {% endcomment %}
+		getBal();
+		function getBal(){
+		var steamid = "{{user.steamid}}";
+		console.log(steamid);
 		$.ajax({
-			url: '{% url "notifications:live_all_notification_list" %}',
-			data: {
-			},
-			dataType: 'json',
-			success: function (data) {
-				console.log(data)
-				$(".inbox-content").empty();
-				data["all_list"].forEach(element => {
-							var notice;
-							if(element["unread"]){
-								notice = "<div class='inbox-card'>" + element["verb"] + "</div>";
-							}
-							else{
-								notice = "<div class='inbox-card read'>" + element["verb"] + "</div>";
-							}
-							$(".inbox-content").append(notice);
-						});
-	
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) { 
-			}       
-			});
-	  }, 5000); {% endcomment %}
-		
-	
-{% comment %} *********************************************************** {% endcomment %}
-{% comment %} For Balance Update {% endcomment %}
-{% comment %} *********************************************************** {% endcomment %}
-	getBal();
-	function getBal(){
-	var steamid = "{{user.steamid}}";
-	console.log(steamid);
-	$.ajax({
-	url: '{% url "wallet:getbalance" %}',
-	data: {
-		'steamid': steamid
-	},
-	dataType: 'json',
-	success: function (data) {
-			obj = JSON.parse(data);
-			document.getElementById("bal").innerHTML = obj["balance"];
-			return obj["balance"];
-		} 
+		url: '{% url "wallet:getbalance" %}',
+		data: {
+			'steamid': steamid
+		},
+		dataType: 'json',
+		success: function (data) {
+				obj = JSON.parse(data);
+				document.getElementById("bal").innerHTML = obj["balance"];
+				return obj["balance"];
+			} 
+		});
+	}
 	});
-}
-});
 </script>
 	</head>
 	<body class="homepage">
@@ -195,38 +194,7 @@ $( document ).ready(function() {
 				{% block logo %}{% endblock logo %}	
 			</div>
 		</div>
-	<!-- Featured -->
-		{% comment %} <div id="featured">
-			<div class="container">
-				<header>
-					<h2>Welcome to Linear</h2>
-				</header>
-				<p>This is <strong>Linear</strong>, a responsive HTML5 site template freebie by <a href="http://templated.co">TEMPLATED</a>. Released for free under the <a href="http://templated.co/license">Creative Commons Attribution</a> license, so use it for whatever (personal or commercial) &ndash; just give us credit! Check out more of our stuff at <a href="http://templated.co">our site</a> or follow us on <a href="http://twitter.com/templatedco">Twitter</a>.</p>
-				<hr />
-				<div class="row">
-					<section class="4u">
-						<span class="pennant"><span class="fa fa-briefcase"></span></span>
-						<h3>Maecenas luctus lectus</h3>
-						<p>Curabitur sit amet nulla. Nam in massa. Sed vel tellus. Curabitur sem urna, consequat vel, suscipit in, mattis placerat, nulla. Sed ac leo.</p>
-						<a href="#" class="button button-style1">Read More</a>
-					</section>
-					<section class="4u">
-						<span class="pennant"><span class="fa fa-lock"></span></span>
-						<h3>Maecenas luctus lectus</h3>
-						<p>Donec ornare neque ac sem. Mauris aliquet. Aliquam sem leo, vulputate sed, convallis at, ultricies quis, justo. Donec magna.</p>
-						<a href="#" class="button button-style1">Read More</a>
-					</section>
-					<section class="4u">
-						<span class="pennant"><span class="fa fa-globe"></span></span>
-						<h3>Maecenas luctus lectus</h3>
-						<p>Curabitur sit amet nulla. Nam in massa. Sed vel tellus. Curabitur sem urna, consequat vel, suscipit in, mattis placerat, nulla. Sed ac leo.</p>
-						<a href="#" class="button button-style1">Read More</a>
-					</section>
-
-				</div>
-			</div>
-		</div> {% endcomment %}
-
+	
 	<!-- Main -->
 		{% comment %} <div id="main"> {% endcomment %}
             {% block inventory %}{% endblock inventory %}
@@ -235,12 +203,6 @@ $( document ).ready(function() {
 			
 			{% block market %}{% endblock market %}
 		{% comment %} </div> {% endcomment %}
-
-	<!-- Tweet -->
-		<div id="tweet">
-			<div class="container">
-			</div>
-		</div>
 
 	<!-- Footer -->
 		<div id="footer">
@@ -268,83 +230,83 @@ $( document ).ready(function() {
 </html>
 
 <style>
-a, a:link, a:visited, a:hover, a:active{
-	text-decoration: none;
-}
+	a, a:link, a:visited, a:hover, a:active{
+		text-decoration: none;
+	}
 
-a:hover{
-	color: white;
-}
-.inbox-dropdown {
-cursor: pointer;
-}
+	a:hover{
+		color: white;
+	}
+	.inbox-dropdown {
+	cursor: pointer;
+	}
 
-.inbox-container {
-position: relative;
-display: inline-block;
-}
+	.inbox-container {
+	position: relative;
+	display: inline-block;
+	}
 
-.inbox-content {
-min-height: 0px;
-min-width: 0px;
-max-height: 40%;
-max-width: 40%;
-display: none;
-position: fixed;
-bottom: 80px;
-right: 10px;
-z-index: 1;
-background: rgb(51,50,50);
-border-radius: 5px;
-padding: 10px
-}
-.inbox-card {
-padding: 10px 5px;
-}
-.inbox-card.read{
-	background: rgb(36, 35, 35);
-	color: rgb(121, 117, 117);
-}
-.inbox-container:hover .inbox-content {
-display: block; 
+	.inbox-content {
+	min-height: 0px;
+	min-width: 0px;
+	max-height: 40%;
+	max-width: 40%;
+	display: none;
+	position: fixed;
+	bottom: 80px;
+	right: 10px;
+	z-index: 1;
+	background: rgb(51,50,50);
+	border-radius: 5px;
+	padding: 10px
+	}
+	.inbox-card {
+	padding: 10px 5px;
+	}
+	.inbox-card.read{
+		background: rgb(36, 35, 35);
+		color: rgb(121, 117, 117);
+	}
+	.inbox-container:hover .inbox-content {
+	display: block; 
 
-}
+	}
 
-.inbox-container:hover .notification .badge {
-display: none; 
-}
+	.inbox-container:hover .notification .badge {
+	display: none; 
+	}
 
-.notification:link {
-			background-color: #555;
-			color: white;
-			text-decoration: none;
-			padding: 15px 26px;
-			position: fixed;
-			bottom: 25px;
-			right: 10px;
-			display: inline-block;
-			border-radius: 5px;
-			}
-.notification:visited {
-			text-decoration: none;
-			color: white;
-			}
-.notification:hover {
-  			background: rgb(118, 79, 226);
-			text-decoration: none;
-			color: white;
-			}
-.notification:active {
-			text-decoration: none;
-			color: white;
-}
-.notification .badge {
-			position: absolute;
-			top: -10px;
-			right: -10px;
-			padding: 5px 10px;
-			border-radius: 50%;
-			background-color: red;
-			color: white;
-			}
+	.notification:link {
+				background-color: #555;
+				color: white;
+				text-decoration: none;
+				padding: 15px 26px;
+				position: fixed;
+				bottom: 25px;
+				right: 10px;
+				display: inline-block;
+				border-radius: 5px;
+				}
+	.notification:visited {
+				text-decoration: none;
+				color: white;
+				}
+	.notification:hover {
+				background: rgb(118, 79, 226);
+				text-decoration: none;
+				color: white;
+				}
+	.notification:active {
+				text-decoration: none;
+				color: white;
+	}
+	.notification .badge {
+				position: absolute;
+				top: -10px;
+				right: -10px;
+				padding: 5px 10px;
+				border-radius: 50%;
+				background-color: red;
+				color: white;
+				}
 </style>
