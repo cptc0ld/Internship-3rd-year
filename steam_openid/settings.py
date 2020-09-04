@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'market',
     'wallet',
     'markettransactions',
-    'tradehandler'
+    'tradehandler',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -66,8 +67,7 @@ ROOT_URLCONF = 'steam_openid.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -143,7 +143,7 @@ STATICFILES_DIRS = [
 # Besides the following, changes were made to AUTHENTICATION_BACKENDS, TEMPLATES and INSTALLED_APPS
 
 # Provide the api-key here
-SOCIAL_AUTH_STEAM_API_KEY = API_KEY
+SOCIAL_AUTH_STEAM_API_KEY = "199119C2D9024ED686C45B5FE281FE97"
 # Fetch extra information about the user from the steam web api
 SOCIAL_AUTH_STEAM_EXTRA_DATA = ['player']
 
@@ -204,4 +204,4 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 
-DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True}
+DJANGO_NOTIFICATIONS_CONFIG = {'USE_JSONFIELD': True}
